@@ -10,7 +10,7 @@
     "build": "npm run buildclosure && npm run buildphp"
   },
   "author": "Chris 2pha Brown",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
     "google-closure-compiler-js": "^20170626.0.0",
     "js2php": "^0.1.0"
