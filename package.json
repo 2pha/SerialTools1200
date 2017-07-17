@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "buildclosure": "./node_modules/.bin/google-closure-compiler-js --warningLevel=VERBOSE ./src/SerialTools1200.js > ./build/SerialTools1200.min.js",
     "closurehelp": "./node_modules/.bin/google-closure-compiler-js --help",
     "buildphp": "./node_modules/.bin/js2php src/SerialTools1200.js > ./build/SerialTools1200.php",

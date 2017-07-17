@@ -4,6 +4,10 @@ class SerialTools1200 {
 
   }
 
+  hmm() {
+    return 1;
+  }
+
   isNewSerialFormat(serial) {
     return serial.toLowerCase().substr(0,2) === 'ge';
   }
@@ -16,4 +20,8 @@ class SerialTools1200 {
     return authors;
   }
 
+}
+
+if (typeof module !== 'undefined' && module.exports != null) {
+    module.exports = SerialTools1200;
 }
