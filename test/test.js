@@ -1,9 +1,8 @@
-var SerialTools1200 = require('../src/SerialTools1200');
-var assert = require('assert');
+const SerialTools1200 = require('../src/SerialTools1200');
+const assert = require('assert');
 
-var oldValid = [
+const oldValid = [
   'MH2BF26656',
-  'LA6FA001016',
   'NH2BL66897',
   'NH0EF23168',
   'CG9830F159',
@@ -11,10 +10,14 @@ var oldValid = [
   'AG8307F292',
   'NH2AE24884',
   'NC2CF27088',
-  'AG7928F375'
+  'AG7928F375',
+  'MJ3K29D142',
+  'LA7CA001029',
+  'AG7L11F204',
+  'NH1bH41849'
 ];
 
-var newValid = [
+const newValid = [
   'GE3IA001117',
   'GE6DD01053',
   'GE3IA001120',
@@ -24,27 +27,69 @@ var newValid = [
   'GE9JC001060',
   'GE2LA001246',
   'GE2LA001114',
-  'GE7JG01497'
+  'GE7JG01497',
+  'GE6EK21577'
 ];
 
-var st = new SerialTools1200();
+const inValid = [
+  'GEGIA001117',
+  'GE3IA00111Y',
+  'MHTBF26656',
+  'MH2ZF26656',
+  'MH2BFPPP',
+  'MH2BF2MS56'
+];
 
+const st = new SerialTools1200();
+
+// Check determining old or new format.
 describe('isNewSerialFormat', function(){
   describe('old', function(){
     oldValid.forEach(function(serial){
-      it('testing is old '+serial, function(){
-        assert.equal(st.isNewSerialFormat(serial), false);
+      it('is old format '+serial, function(){
+        assert.equal(st._isNewSerialFormat(serial), false);
       });
     });
   });
   describe('new', function(){
     newValid.forEach(function(serial){
-      it('testing is new '+serial, function(){
-        assert.equal(st.isNewSerialFormat(serial), true);
+      it('is new format '+serial, function(){
+        assert.equal(st._isNewSerialFormat(serial), true);
       });
     });
   });
 });
+
+// Check validity
+describe('Check valid', function(){
+  describe('old', function(){
+    oldValid.forEach(function(serial){
+      it(serial+' is valid old', function(){
+        assert.equal(st.isValid(serial), true);
+      })
+    });
+  });
+  describe('new', function(){
+    newValid.forEach(function(serial){
+      it(serial+' is valid new', function(){
+        assert.equal(st.isValid(serial), true);
+      })
+    });
+  });
+});
+
+// Check invalid
+describe('Check valid', function(){
+  describe('invalid', function(){
+    inValid.forEach(function(serial){
+      it(serial+' is invalid', function(){
+        assert.equal(st.isValid(serial), false);
+      })
+    });
+  });
+});
+
+
 
 describe('Array', function() {
   describe('#indexOf()', function() {

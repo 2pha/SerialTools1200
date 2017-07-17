@@ -1,14 +1,26 @@
 class SerialTools1200 {
 
   isValid(serial) {
-
+    if(this._isNewSerialFormat(serial)){
+      // New serial format.
+      return this._isValidNew(serial);
+    }else{
+      // Old serial format.
+      return this._isValidOld(serial);
+    }
   }
 
-  hmm() {
-    return 1;
+  _isValidNew(serial) {
+    let s = serial.toLowerCase();
+    return true;
   }
 
-  isNewSerialFormat(serial) {
+  _isValidOld(serial) {
+    let s = serial.toLowerCase();
+    return true;
+  }
+
+  _isNewSerialFormat(serial) {
     return serial.toLowerCase().substr(0,2) === 'ge';
   }
 
