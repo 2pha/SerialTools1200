@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "test": "mocha",
-    "buildclosure": "./node_modules/.bin/google-closure-compiler-js --warningLevel=VERBOSE ./src/SerialTools1200.js > ./build/SerialTools1200.min.js",
+    "testphp": "php ./test/test.php",
+    "testall": "npm test && npm run testphp",
+    "buildclosure": "./node_modules/.bin/google-closure-compiler-js --externs=./src/externs.js --outputWrapper=%output%'if (typeof module !== typeof undefined && module.exports) {module.exports = SerialTools1200;}' --warningLevel=VERBOSE ./src/SerialTools1200.js > ./build/SerialTools1200.min.js",
     "closurehelp": "./node_modules/.bin/google-closure-compiler-js --help",
     "buildphp": "./node_modules/.bin/js2php src/SerialTools1200.js > ./build/SerialTools1200.php",
     "build": "npm run buildclosure && npm run buildphp"
