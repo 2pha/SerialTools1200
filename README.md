@@ -1,3 +1,10 @@
+This is basically just for testing some build tools and workflow.  
+What it does:  
+* generates PHP class from JS class using JS2PHP.
+* compiles JS class with closure compiler.
+* runs mocha tests on compiled JS
+* runs custom tests on PHP class
+  
 scripts:
 * **tests**
 * npm test - test compiled js class
