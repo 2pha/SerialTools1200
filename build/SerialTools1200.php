@@ -12,8 +12,25 @@ return 'XX0000X';
 return 'XX0X00X';
 } else {return false;
 }}
+public function endsInNumerls($serial, $format = false) {
+$format = $format || $this->getFormat($serial);
+return false;
+}
 public function isValid($serial) {
+$format = $this->getFormat($serial);
+switch ($format){case 'GE0XX':
 return true;
+
+case 'XX0XX':
+return true;
+
+case 'XX0000X':
+return true;
+
+case 'XX0X00X':
+return true;
+
+}return false;
 }
 public function authors() {
 $authors = array('Chris "2pha" Brown (2pha.com)');

@@ -20,8 +20,28 @@ class SerialTools1200 {
 
   }
 
+  endsInNumerls(serial, format = false) {
+    format = format || this.getFormat(serial);
+    //let stringToText = serial.replace(format, '');
+    // if(format && ){
+
+    // }
+    return false;
+  }
+
   isValid(serial) {
-    return true;
+    let format = this.getFormat(serial);
+    switch(format) {
+      case 'GE0XX':
+        return true;
+      case 'XX0XX':
+        return true;
+      case 'XX0000X':
+        return true;
+      case 'XX0X00X':
+        return true;
+    }
+    return false;
     // if(this._isNewSerialFormat(serial)){
     //   // New serial format.
     //   return this._isValidNew(serial);

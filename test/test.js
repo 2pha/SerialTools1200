@@ -56,6 +56,7 @@ const inValid = [
 
 const st = new SerialTools1200();
 
+// test return value of getFormat.
 describe('get Format', function(){
 
   describe('GE0XX', function(){
@@ -90,85 +91,49 @@ describe('get Format', function(){
     });
   });
 
-  // describe('XX0XX', function(){
-  //   serials[1].forEach(function(serial){
-  //     it('XX0XX format '+serial, function(){
-  //       assert.equal(st.getFormat(serial), 'XX0XX');
-  //     });
-  //   });
-  // });
-
-  // describe('XX0000X', function(){
-  //   serials[2].forEach(function(serial){
-  //     it('XX0000X format '+serial, function(){
-  //       assert.equal(st.getFormat(serial), 'XX0000X');
-  //     });
-  //   });
-  // });
-
-  // describe('XX0X00X', function(){
-  //   serials[3].forEach(function(serial){
-  //     it('XX0X00X format '+serial, function(){
-  //       assert.equal(st.getFormat(serial), 'XX0X00X');
-  //     });
-  //   });
-  // });
-
 });
 
-// Check determining old or new format.
-// describe('isNewSerialFormat', function(){
-//   describe('old', function(){
-//     oldValid.forEach(function(serial){
-//       it('is old format '+serial, function(){
-//         assert.equal(st._isNewSerialFormat(serial), false);
-//       });
-//     });
-//   });
-//   describe('new', function(){
-//     newValid.forEach(function(serial){
-//       it('is new format '+serial, function(){
-//         assert.equal(st._isNewSerialFormat(serial), true);
-//       });
-//     });
-//   });
-// });
+// test for validity
+describe('is valid', function(){
 
-// // Check validity
-// describe('Check valid', function(){
-//   describe('old', function(){
-//     oldValid.forEach(function(serial){
-//       it(serial+' is valid old', function(){
-//         assert.equal(st.isValid(serial), true);
-//       })
-//     });
-//   });
-//   describe('new', function(){
-//     newValid.forEach(function(serial){
-//       it(serial+' is valid new', function(){
-//         assert.equal(st.isValid(serial), true);
-//       })
-//     });
-//   });
-// });
+  describe('GE0XX', function(){
+    serials[0].forEach(function(serial){
+      it('GE0XX valid '+serial, function(){
+        assert.equal(st.isValid(serial), true);
+      });
+    });
+  });
 
-// // Check invalid
-// describe('Check valid', function(){
-//   describe('invalid', function(){
-//     inValid.forEach(function(serial){
-//       it(serial+' is invalid', function(){
-//         assert.equal(st.isValid(serial), false);
-//       })
-//     });
-//   });
-// });
+  describe('XX0XX', function(){
+    serials[1].forEach(function(serial){
+      it('XX0XX valid '+serial, function(){
+        assert.equal(st.isValid(serial), true);
+      });
+    });
+  });
 
+  describe('XX0000X', function(){
+    serials[2].forEach(function(serial){
+      it('XX0000X valid '+serial, function(){
+        assert.equal(st.isValid(serial), true);
+      });
+    });
+  });
 
+  describe('XX0X00X', function(){
+    serials[3].forEach(function(serial){
+      it('XX0X00X valid '+serial, function(){
+        assert.equal(st.isValid(serial), true);
+      });
+    });
+  });
 
-// describe('Array', function() {
-//   describe('#indexOf()', function() {
-//     it('should return -1 when the value is not present', function() {
-//       assert.equal(-1, [1,2,3].indexOf(4));
-//     });
-//   });
-// });
+  describe('invalid', function(){
+    serials[3].forEach(function(serial){
+      it('invalid '+serial, function(){
+        assert.equal(st.isValid(serial), false);
+      });
+    });
+  });
+
+});
