@@ -12,13 +12,20 @@ return 'XX0000X';
 return 'XX0X00X';
 } else {return false;
 }}
-public function endsInNumerls($serial, $format = false) {
-$format = $format || $this->getFormat($serial);
-return false;
+public function endsInNumerls($serial) {
+$format = $this->getFormat($serial);
+if ($format) {
+$strlen = count(str_split($format));
+$stringToTest = substr($serial, $strlen);
+if (!preg_match('/[^0-9]+/', $stringToTest)) {
+return true;
+}}return false;
 }
 public function isValid($serial) {
 $format = $this->getFormat($serial);
-switch ($format){case 'GE0XX':
+if (!$this->endsInNumerls($serial)) {
+return false;
+}switch ($format){case 'GE0XX':
 return true;
 
 case 'XX0XX':

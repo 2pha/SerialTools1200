@@ -49,7 +49,7 @@ const inValid = [
   'GEGIA001117',
   'GE3IA00111Y',
   'MHTBF26656',
-  'MH2ZF26656',
+  'MH2ZF266i6',
   'MH2BFPPP',
   'MH2BF2MS56'
 ];
@@ -129,7 +129,7 @@ describe('is valid', function(){
   });
 
   describe('invalid', function(){
-    serials[3].forEach(function(serial){
+    inValid.forEach(function(serial){
       it('invalid '+serial, function(){
         assert.equal(st.isValid(serial), false);
       });

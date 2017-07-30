@@ -52,7 +52,7 @@ $inValid = [
   'GEGIA001117',
   'GE3IA00111Y',
   'MHTBF26656',
-  'MH2ZF26656',
+  'MH2ZF266i6',
   'MH2BFPPP',
   'MH2BF2MS56'
 ];
@@ -66,6 +66,13 @@ function getFormatTest($serials, $st) {
   }
 }
 
+function invalidTest($serials, $st) {
+  echo 'testing invalid '.PHP_EOL;
+  foreach($serials as $s){
+    result('invalid ', $s, ($st->isValid($s) == false));
+  }
+}
+
 function result($check, $serial, $pass) {
   if($pass){
     echo "\033[32m $check $serial Pass \033[0m \n";
@@ -75,3 +82,4 @@ function result($check, $serial, $pass) {
 }
 
 getFormatTest($serials, $st);
+invalidTest($inValid, $st);

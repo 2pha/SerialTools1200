@@ -20,17 +20,23 @@ class SerialTools1200 {
 
   }
 
-  endsInNumerls(serial, format = false) {
-    format = format || this.getFormat(serial);
-    //let stringToText = serial.replace(format, '');
-    // if(format && ){
-
-    // }
+  endsInNumerls(serial) {
+    let format = this.getFormat(serial);
+    if(format){
+      let strlen = format.split("").length;
+      let stringToTest = serial.substr(strlen);
+      if(!stringToTest.match(/[^0-9]+/)){
+        return true;
+      }
+    }
     return false;
   }
 
   isValid(serial) {
     let format = this.getFormat(serial);
+    if(!this.endsInNumerls(serial)){
+      return false;
+    }
     switch(format) {
       case 'GE0XX':
         return true;
