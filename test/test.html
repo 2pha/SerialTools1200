@@ -1,0 +1,31 @@
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>Mocha Tests</title>
+      <link href="https://unpkg.com/mocha@4.0.1/mocha.css" rel="stylesheet" />
+  </head>
+  <body>
+  <div id="mocha"></div>
+
+  <script src="https://unpkg.com/chai@4.1.2/chai.js"></script>
+  <script src="https://unpkg.com/mocha@4.0.1/mocha.js"></script>
+
+  <script>mocha.setup('bdd')</script>
+  <!-- <script type="module" src="test.js"></script> -->
+
+  <script>
+
+      describe('GE0XX', function(){
+        //serials[0].forEach(function(serial){
+          it('GE0XX format ', function(){
+            chai.expect('test').to.equal('test');
+            //assert.equal('test', 'test');
+          });
+        //});
+      });
+
+      mocha.checkLeaks();
+      mocha.run();
+  </script>
+  </body>
+  </html>

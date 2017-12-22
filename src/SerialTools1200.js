@@ -1,31 +1,26 @@
-class SerialTools1200 {
+//@ts-check
 
+export class SerialTools1200 {
   getFormat(serial) {
-
-    if(serial.match(/^(GE[0-9][a-z]{2}[0-9])+/i)){
+    if (serial.match(/^(GE[0-9][a-z]{2}[0-9])+/i)) {
       return 'GE0XX';
-    }
-    else if(serial.match(/^([a-z]{2}[0-9][a-z]{2}[0-9])+/i)){
+    } else if (serial.match(/^([a-z]{2}[0-9][a-z]{2}[0-9])+/i)) {
       return 'XX0XX';
-    }
-    else if(serial.match(/^([a-z]{2}[0-9]{4}[a-z])+/i)){
+    } else if (serial.match(/^([a-z]{2}[0-9]{4}[a-z])+/i)) {
       return 'XX0000X';
-    }
-    else if(serial.match(/^([a-z]{2}[0-9][a-z][0-9]{2}[a-z])+/i)){
+    } else if (serial.match(/^([a-z]{2}[0-9][a-z][0-9]{2}[a-z])+/i)) {
       return 'XX0X00X';
-    }
-    else {
+    } else {
       return false;
     }
-
   }
 
   endsInNumerls(serial) {
     let format = this.getFormat(serial);
-    if(format){
-      let strlen = format.split("").length;
+    if (format) {
+      let strlen = format.split('').length;
       let stringToTest = serial.substr(strlen);
-      if(!stringToTest.match(/[^0-9]+/)){
+      if (!stringToTest.match(/[^0-9]+/)) {
         return true;
       }
     }
@@ -34,10 +29,10 @@ class SerialTools1200 {
 
   isValid(serial) {
     let format = this.getFormat(serial);
-    if(!this.endsInNumerls(serial)){
+    if (!this.endsInNumerls(serial)) {
       return false;
     }
-    switch(format) {
+    switch (format) {
       case 'GE0XX':
         return true;
       case 'XX0XX':
@@ -93,7 +88,6 @@ class SerialTools1200 {
     limitations under the License.
     `;
   }
-
 }
 
 // if (module && module.exports) {

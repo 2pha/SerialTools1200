@@ -1,5 +1,9 @@
-const SerialTools1200 = require('../build/SerialTools1200.min');
-const assert = require('assert');
+//const SerialTools1200 = require('../build/SerialTools1200.min');
+//const assert = require('assert');
+
+import { SerialTools1200 } from '../src/SerialTools1200';
+//import { assert } from 'assert';
+//const assert = require('assert');
 
 const GE0XX = [
   'GE3IA001117',
