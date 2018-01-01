@@ -2,6 +2,8 @@ const rollup = require('rollup');
 const babel = require('rollup-plugin-babel');
 const uglify = require('rollup-plugin-uglify');
 
+const banner = "// Copyright 2017 Chris Brown https://2pha.com\n// http://www.apache.org/licenses/LICENSE-2.0";
+
 const defaultPlugins = [
   babel({
     exclude: 'node_modules/**'
@@ -22,6 +24,7 @@ rollup.rollup({
     name: 'SerialTools1200',
     file: 'build/SerialTools1200.js',
     indent: '  ',
+    banner: banner,
   })
 })
 
@@ -32,7 +35,7 @@ rollup.rollup({
     babel({
       exclude: 'node_modules/**',
     }),
-    uglify({})
+    uglify({output: {preamble: banner}})
   ],
 }).then(bundle => {
   bundle.write({
@@ -50,5 +53,6 @@ rollup.rollup({
   bundle.write({
     format: 'es',
     file: 'build/SerialTools1200.module.js',
+    banner: banner,
   })
 })

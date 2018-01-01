@@ -1,3 +1,5 @@
+// Copyright 2017 Chris Brown https://2pha.com
+// http://www.apache.org/licenses/LICENSE-2.0
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -104,17 +106,6 @@
       //   return serial.toLowerCase().substr(0,2) === 'ge';
       // }
 
-    }, {
-      key: 'authors',
-      value: function authors() {
-        var authors = ['Chris "2pha" Brown (2pha.com)'];
-        return authors;
-      }
-    }, {
-      key: 'copyright',
-      value: function copyright() {
-        return '\n    Copyright 2017 Chris Brown http://2pha.com\n\n    Licensed under the Apache License, Version 2.0 (the \'License\');\n    you may not use this file except in compliance with the License.\n    You may obtain a copy of the License at\n\n        http://www.apache.org/licenses/LICENSE-2.0\n\n    Unless required by applicable law or agreed to in writing, software\n    distributed under the License is distributed on an \'AS IS\' BASIS,\n    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n    See the License for the specific language governing permissions and\n    limitations under the License.\n    ';
-      }
     }]);
     return _class;
   }();
