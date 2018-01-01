@@ -18,7 +18,7 @@ rollup.rollup({
   ],
 }).then(bundle => {
   bundle.write({
-    format: 'iife',
+    format: 'umd',
     name: 'SerialTools1200',
     file: 'build/SerialTools1200.js',
     indent: '  ',
@@ -36,7 +36,7 @@ rollup.rollup({
   ],
 }).then(bundle => {
   bundle.write({
-    format: 'iife',
+    format: 'umd',
     name: 'SerialTools1200',
     file: 'build/SerialTools1200.min.js',
     indent: '  ',

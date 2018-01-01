@@ -1,6 +1,7 @@
 //@ts-check
 
 class SerialTools1200  {
+
   getFormat(serial) {
     if (serial.match(/^(GE[0-9][a-z]{2}[0-9])+/i)) {
       return 'GE0XX';

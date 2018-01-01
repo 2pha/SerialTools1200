@@ -1,5 +1,8 @@
-var SerialTools1200 = (function () {
-  'use strict';
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global.SerialTools1200 = factory());
+}(this, (function () { 'use strict';
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -118,4 +121,4 @@ var SerialTools1200 = (function () {
 
   return _class;
 
-}());
+})));
