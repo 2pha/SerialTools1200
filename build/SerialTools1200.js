@@ -1,10 +1,10 @@
 // Copyright 2017 Chris Brown https://2pha.com
 // http://www.apache.org/licenses/LICENSE-2.0
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global.SerialTools1200 = factory());
-}(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (factory((global.SerialTools1200 = {})));
+}(this, (function (exports) { 'use strict';
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -32,12 +32,12 @@
 
   //@ts-check
 
-  var _class = function () {
-    function _class() {
-      classCallCheck(this, _class);
+  var SerialTools1200 = function () {
+    function SerialTools1200() {
+      classCallCheck(this, SerialTools1200);
     }
 
-    createClass(_class, [{
+    createClass(SerialTools1200, [{
       key: 'getFormat',
       value: function getFormat(serial) {
         if (serial.match(/^(GE[0-9][a-z]{2}[0-9])+/i)) {
@@ -107,9 +107,11 @@
       // }
 
     }]);
-    return _class;
+    return SerialTools1200;
   }();
 
-  return _class;
+  exports.SerialTools1200 = SerialTools1200;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

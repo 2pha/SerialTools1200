@@ -1,6 +1,6 @@
 //@ts-check
 
-export default class  {
+export class SerialTools1200  {
 
   getFormat(serial) {
     if (serial.match(/^(GE[0-9][a-z]{2}[0-9])+/i)) {
@@ -68,3 +68,4 @@ export default class  {
   // }
 
 }
+

@@ -71,4 +71,4 @@ class SerialTools1200  {
 
 }
 
-export default SerialTools1200;
+export { SerialTools1200 };
