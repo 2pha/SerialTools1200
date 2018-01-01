@@ -1,7 +1,6 @@
 //@ts-check
 
-export default class  {
-
+class SerialTools1200  {
   getFormat(serial) {
     if (serial.match(/^(GE[0-9][a-z]{2}[0-9])+/i)) {
       return 'GE0XX';
@@ -116,3 +115,5 @@ export default class  {
 // }));
 
 // //"buildclosure": "./node_modules/.bin/google-closure-compiler-js --outputWrapper=%output%' if (typeof module === 'object' && module.exports) {module.exports = SerialTools1200;}' --warningLevel=VERBOSE ./src/SerialTools1200.js > ./build/SerialTools1200.min.js",
+
+export default SerialTools1200;
