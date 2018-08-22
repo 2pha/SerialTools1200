@@ -4,7 +4,7 @@ export class SerialTools1200 {
 
   constructor() {
     this.formats = {
-      'GE0XX00000X': {
+      'GE0XX00000R': {
         regex: [
           '[GE]{2}',
           '[0-9]',
@@ -15,7 +15,7 @@ export class SerialTools1200 {
           '[0-9]',
           '[0-9]',
           '[0-9]',
-          '[A-Z]'
+          '[R]'
         ]
       },
       'GE0XX000000': {
@@ -73,7 +73,7 @@ export class SerialTools1200 {
     // Use a for loop so can convert to PHP.
     for(let format in this.formats) {
       // Put it into an array, because php conversion does not work well with string cancatination.
-      let regex = ['/^'];
+      let regex = ['^'];
       for(let i = 0; i < length; i++) {
         // Access format object like an array so converts to php.
         if (i < this.formats[format]['regex'].length) {
@@ -81,7 +81,7 @@ export class SerialTools1200 {
           regex.push(this.formats[format]['regex'][i]);
         }
       }
-      regex.push('$/');
+      regex.push('$');
       let regexString = regex.join('');
       if (string.toUpperCase().match(regexString)) {
         return format;

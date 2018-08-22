@@ -4,9 +4,9 @@
       "env",
       {
         "targets": {
-          "browsers": ["ie 8"]
+          "browsers": ["last 5 versions", "safari >= 6"]
         },
-        "modules": false
+        "modules": "umd"
       }
     ]
   ]

@@ -1,4 +1,5 @@
-const SerialTools1200 = require('../build/SerialTools1200.min');
+//require("babel-polyfill");
+const SerialTools1200 = require('../build/SerialTools1200');
 const assert = require('assert');
 
 //import { SerialTools1200 } from '../src/SerialTools1200';
@@ -50,7 +51,7 @@ const serials = [
 ];
 */
 
-const GE0XX00000X = [
+const GE0XX00000R = [
   'GE0GF01082R',
   'GE8AD01111R',
   'GE7LC01168R',
@@ -96,7 +97,7 @@ const inValid = [
 ];
 
 const serials = [
-  GE0XX00000X,
+  GE0XX00000R,
   GE0XX000000,
   XX0XX00000,
   XX0X00X000
@@ -106,10 +107,10 @@ const st = new SerialTools1200.SerialTools1200();
 
 describe('get Format', function(){
 
-  describe('GE0XX00000X', function(){
+  describe('GE0XX00000R', function(){
     serials[0].forEach(function(serial){
-      it('GE0XX00000X format '+serial, function(){
-        assert.equal(st.getFormat(serial), 'GE0XX00000X');
+      it('GE0XX00000R format '+serial, function(){
+        assert.equal(st.getFormat(serial), 'GE0XX00000R');
       });
     });
   });
