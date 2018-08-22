@@ -1,10 +1,11 @@
-const SerialTools1200 = require('../build/SerialTools1200');
+const SerialTools1200 = require('../build/SerialTools1200.min');
 const assert = require('assert');
 
 //import { SerialTools1200 } from '../src/SerialTools1200';
 //import { assert } from 'assert';
 //const assert = require('assert');
 
+/*
 const GE0XX = [
   'GE3IA001117',
   'GE6DD01053',
@@ -47,7 +48,43 @@ const serials = [
   XX0000X,
   XX0X00X
 ];
+*/
 
+const GE0XX00000X = [
+  'GE0GF01082R',
+  'GE8AD01111R',
+  'GE7LC01168R',
+  'GE6HB01016R'
+];
+
+const GE0XX000000 = [
+  'GE5GA001629',
+  'GE4BZ001112',
+  'GE3IA001117',
+  'GE3IA001120',
+  'GE9JC001076',
+  'GE2LA001114',
+];
+
+const XX0XX00000 = [
+  'GE6DD01053',
+  'GE5GK95625',
+  'GE7JG01497',
+  'GE6EK21577',
+  'NH2BL66897',
+  'NH0EF23168',
+  'NH2AE24884',
+  'NH1bH41849'
+];
+
+const XX0X00X000 = [
+  'MJ3K29D142',
+  'AG7L11F204',
+  'CG9830F159',
+  'MJ6515F183',
+  'AG8307F292',
+  'AG7928F375'
+];
 
 const inValid = [
   'GEGIA001117',
@@ -58,8 +95,52 @@ const inValid = [
   'MH2BF2MS56'
 ];
 
-const st = new SerialTools1200();
+const serials = [
+  GE0XX00000X,
+  GE0XX000000,
+  XX0XX00000,
+  XX0X00X000
+];
+console.log(SerialTools1200);
+const st = new SerialTools1200.SerialTools1200();
 
+describe('get Format', function(){
+
+  describe('GE0XX00000X', function(){
+    serials[0].forEach(function(serial){
+      it('GE0XX00000X format '+serial, function(){
+        assert.equal(st.getFormat(serial), 'GE0XX00000X');
+      });
+    });
+  });
+
+  describe('GE0XX000000', function(){
+    serials[1].forEach(function(serial){
+      it('GE0XX000000 format '+serial, function(){
+        assert.equal(st.getFormat(serial), 'GE0XX000000');
+      });
+    });
+  });
+
+  describe('XX0XX00000', function(){
+    serials[2].forEach(function(serial){
+      it('XX0XX00000 format '+serial, function(){
+        assert.equal(st.getFormat(serial), 'XX0XX00000');
+      });
+    });
+  });
+
+  describe('XX0X00X000', function(){
+    serials[3].forEach(function(serial){
+      it('XX0X00X000 format '+serial, function(){
+        assert.equal(st.getFormat(serial), 'XX0X00X000');
+      });
+    });
+  });
+
+});
+
+/*
 // test return value of getFormat.
 describe('get Format', function(){
 
@@ -140,4 +221,6 @@ describe('is valid', function(){
     });
   });
 
+
 });
+*/

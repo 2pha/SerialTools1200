@@ -1,29 +1,36 @@
 <?php
 class SerialTools1200
 {
-public function getFormat($serial) {
-if (preg_match('/^(GE[0-9][a-z]{2}[0-9])+/i', $serial)) {
-return 'GE0XX';
-} else if (preg_match('/^([a-z]{2}[0-9][a-z]{2}[0-9])+/i', $serial)) {
-return 'XX0XX';
-} else if (preg_match('/^([a-z]{2}[0-9]{4}[a-z])+/i', $serial)) {
-return 'XX0000X';
-} else if (preg_match('/^([a-z]{2}[0-9][a-z][0-9]{2}[a-z])+/i', $serial)) {
-return 'XX0X00X';
-} else {return false;
-}}
-public function endsInNumerls($serial) {
-$format = $this->getFormat($serial);
+public $formats;
+public function __construct() {
+$this->formats = array("GE0XX00000X" => array("regex" => array('[GE]{2}', '[0-9]', '[A-L]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[A-Z]')), "GE0XX000000" => array("regex" => array('[GE]{2}', '[0-9]', '[A-L]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]')), "XX0XX00000" => array("regex" => array('[GE|NH]{2}', '[0-9]', '[A-L]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '')), "XX0X00X000" => array("regex" => array('[CG|AG|MJ|MU|DA]{2}', '[0-9]', '[(1-9)|(JKL)]', '[0-3]', '[0-9]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '')));
+}
+public function getFormat($string) {
+$length = strlen($string);
+if ($length < 2) {
+return false;
+}foreach ($this->formats as $format => $___){$regex = array('/^');
+for ($i = 0;
+$i < $length;$i++) {if ($i < count($this->formats[$format]['regex'])) {
+array_push($regex, $this->formats[$format]['regex'][$i]);
+}}array_push($regex, '$/');
+$regexString = join('', $regex);
+if (preg_match($regexString, strtoupper($string))) {
+return $format;
+}}return '';
+}
+public function endsInNumerls($string) {
+$format = $this->getFormat($string);
 if ($format) {
 $strlen = count(str_split($format));
-$stringToTest = substr($serial, $strlen);
+$stringToTest = substr($string, $strlen);
 if (!preg_match('/[^0-9]+/', $stringToTest)) {
 return true;
 }}return false;
 }
-public function isValid($serial) {
-$format = $this->getFormat($serial);
-if (!$this->endsInNumerls($serial)) {
+public function isValid($string) {
+$format = $this->getFormat($string);
+if (!$this->endsInNumerls($string)) {
 return false;
 }switch ($format){case 'GE0XX':
 return true;

@@ -2,9 +2,93 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 //@ts-check
 
-class SerialTools1200  {
+class SerialTools1200 {
+
+  constructor() {
+    this.formats = {
+      'GE0XX00000X': {
+        regex: [
+          '[GE]{2}',
+          '[0-9]',
+          '[A-L]',
+          '[A-Z]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[A-Z]'
+        ]
+      },
+      'GE0XX000000': {
+        regex: [
+          '[GE]{2}',
+          '[0-9]',
+          '[A-L]',
+          '[A-Z]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]'
+        ]
+      },
+      'XX0XX00000': {
+        regex: [
+          '[GE|NH]{2}',
+          '[0-9]',
+          '[A-L]',
+          '[A-Z]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          ''
+        ]
+      },
+      'XX0X00X000': {
+        regex: [
+          '[CG|AG|MJ|MU|DA]{2}',
+          '[0-9]',
+          '[(1-9)|(JKL)]',
+          '[0-3]',
+          '[0-9]',
+          '[A-Z]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          ''
+        ]
+      }
+    };
+  }
 
   getFormat(serial) {
+
+    let length = serial.length;
+    if (length < 2) {
+      return false;
+    }
+
+    for (const key in this.formats) {
+      let regex = '';
+      for (let i = 0; i < length; i++) {
+        if (i < this.formats[key].regex.length) {
+          regex += this.formats[key].regex[i];
+        }
+      }
+      regex = '^' + regex + '$';
+      //console.log(regex);
+      //console.log(serial.match(regex));
+      if (serial.toUpperCase().match(regex)) {
+        return key;
+      }
+    }
+    return false;
+
+    /*
     if (serial.match(/^(GE[0-9][a-z]{2}[0-9])+/i)) {
       return 'GE0XX';
     } else if (serial.match(/^([a-z]{2}[0-9][a-z]{2}[0-9])+/i)) {
@@ -16,6 +100,7 @@ class SerialTools1200  {
     } else {
       return false;
     }
+    */
   }
 
   endsInNumerls(serial) {
@@ -70,5 +155,7 @@ class SerialTools1200  {
   // }
 
 }
+
+//export default {SerialTools1200}
 
 export { SerialTools1200 };
