@@ -3,43 +3,6 @@
 require(dirname(__FILE__).'/../build/SerialTools1200.php');
 
 $st = new SerialTools1200();
-/*
-$GE0XX = [
-  'GE3IA001117',
-  'GE6DD01053',
-  'GE3IA001120',
-  'GE5GK95625',
-  'GE1JC001587',
-  'GE9JC001076',
-  'GE9JC001060',
-  'GE2LA001246',
-  'GE2LA001114',
-  'GE7JG01497',
-  'GE6EK21577'
-];
-
-$XX0XX = [
-  'MH2BF26656',
-  'NH2BL66897',
-  'NH0EF23168',
-  'NH2AE24884',
-  'NC2CF27088',
-  'LA7CA001029',
-  'NH1bH41849'
-];
-
-$XX0000X = [
-  'CG9830F159',
-  'MJ6515F183',
-  'AG8307F292',
-  'AG7928F375'
-];
-
-$XX0X00X = [
-  'MJ3K29D142',
-  'AG7L11F204'
-];
-*/
 
 $GE0XX00000R = [
   'GE0GF01082R',
@@ -76,16 +39,9 @@ $XX0X00X000 = [
   'AG8307F292',
   'AG7928F375'
 ];
-/*
+
 $serials = [
-  'GE0XX' => $GE0XX,
-  'XX0XX' => $XX0XX,
-  'XX0000X' => $XX0000X,
-  'XX0X00X' => $XX0X00X
-];
-*/
-$serials = [
-  'GE0XX00000X' => $GE0XX00000X,
+  'GE0XX00000R' => $GE0XX00000R,
   'GE0XX000000' => $GE0XX000000,
   'XX0XX00000' => $XX0XX00000,
   'XX0X00X000' => $XX0X00X000
@@ -116,6 +72,45 @@ function getFormatTest($serials, $st) {
   }
 }
 
+function validTest($serials, $st) {
+  foreach($serials as $format => $ss){
+    echo 'testing is valid '.$format.PHP_EOL;
+    foreach($ss as $s) {
+      result('is valid ', $s, ($st->isValid($s) == true));
+    }
+  }
+}
+
+function partialTest($serials, $st) {
+  foreach($serials as $format => $ss){
+    echo 'testing is partially valid '.$format.PHP_EOL;
+    foreach($ss as $s) {
+      $s = substr($s, 0, -2);
+      result('is partially valid ', $s, ($st->isValid($s, false) == true));
+    }
+  }
+}
+
+function partialFullTest($serials, $st) {
+  foreach($serials as $format => $ss){
+    echo 'testing is partially valid full '.$format.PHP_EOL;
+    foreach($ss as $s) {
+      $s = substr($s, 0, -2);
+      result('is partially valid full ', $s, ($st->isValid($s, true) == false));
+    }
+  }
+}
+
+function tooLongTest($serials, $st) {
+  foreach($serials as $format => $ss){
+    echo 'testing too long '.$format.PHP_EOL;
+    foreach($ss as $s) {
+      $s = $s . '01';
+      result('is too long ', $s, ($st->isValid($s) == false));
+    }
+  }
+}
+
 function invalidTest($serials, $st) {
   echo 'testing invalid '.PHP_EOL;
   foreach($serials as $s){
@@ -132,4 +127,8 @@ function result($check, $serial, $pass) {
 }
 
 getFormatTest($serials, $st);
+validTest($serials, $st);
+partialTest($serials, $st);
+partialFullTest($serials, $st);
+tooLongTest($serials, $st);
 invalidTest($inValid, $st);

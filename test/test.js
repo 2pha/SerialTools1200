@@ -141,6 +141,61 @@ describe('get Format', function(){
 
 });
 
+
+describe('Is valid', function(){
+  serials.forEach(function(serialitems){
+    serialitems.forEach(function(serial){
+      it(serial+' is valid', function(){
+        assert.equal(st.isValid(serial), true);
+      });
+    });
+  });
+});
+
+describe('Partially Valid', function(){
+  serials.forEach(function(serialItems){
+    serialItems.forEach(function(serial){
+      // remove a couple of digits from serial.
+      let s = serial.slice(0, -3);
+      it(s+' partially valid', function(){
+        assert.equal(st.isValid(s, false), true);
+      });
+    });
+  });
+});
+
+describe('Partially Valid check full', function(){
+  serials.forEach(function(serialItems){
+    serialItems.forEach(function(serial){
+      // remove a couple of digits from serial.
+      let s = serial.slice(0, -3);
+      it(s+' partial but check full', function(){
+        assert.equal(st.isValid(s, true), false);
+      });
+    });
+  });
+});
+
+describe('Too long', function(){
+  serials.forEach(function(serialItems){
+    serialItems.forEach(function(serial){
+      // remove a couple of digits from serial.
+      let s = serial+'01';
+      it(s+' Too Long', function(){
+        assert.equal(st.isValid(s), false);
+      });
+    });
+  });
+});
+
+describe('is not valid', function(){
+  inValid.forEach(function(serial){
+    it(serial+' is not valid', function(){
+      assert.equal(st.isValid(serial), false);
+    });
+  });
+});
+
 /*
 // test return value of getFormat.
 describe('get Format', function(){
