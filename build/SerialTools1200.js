@@ -46,84 +46,109 @@
       _classCallCheck(this, SerialTools1200);
 
       this.mks = {
-        'mk2': {
-          'start_year': 1979,
-          'end_year': 2010
+        mk2: {
+          start_year: 1979,
+          end_year: 2010
         },
-        'mk3': {
-          'start_year': 1989,
-          'end_year': 1998
+        mk3: {
+          start_year: 1989,
+          end_year: 1998
         },
-        'mk4': {
-          'start_year': 1996,
-          'end_year': 2005
+        mk4: {
+          start_year: 1996,
+          end_year: 2005
         },
-        'mk3d': {
-          'start_year': 1997,
-          'end_year': 2002
+        mk3d: {
+          start_year: 1997,
+          end_year: 2002
         },
-        'm3d': {
-          'start_year': 1997,
-          'end_year': 2002
+        m3d: {
+          start_year: 1997,
+          end_year: 2002
         },
-        'ltd': {
-          'start_year': 1995,
-          'end_year': 2002
+        ltd: {
+          start_year: 1995,
+          end_year: 2002
         },
-        'mk5': {
-          'start_year': 2002,
-          'end_year': 2010
+        mk5: {
+          start_year: 2002,
+          end_year: 2010
         },
-        'mk5g': {
-          'start_year': 2002,
-          'end_year': 2010
+        mk5g: {
+          start_year: 2002,
+          end_year: 2010
         },
-        'm5g': {
-          'start_year': 2002,
-          'end_year': 2010
+        m5g: {
+          start_year: 2002,
+          end_year: 2010
         },
-        'gld': {
-          'start_year': 2004,
-          'end_year': 2004
+        gld: {
+          start_year: 2004,
+          end_year: 2004
         },
-        'mk6': {
-          'start_year': 2007,
-          'end_year': 2010
+        mk6: {
+          start_year: 2007,
+          end_year: 2010
         },
-        'gae': {
-          'start_year': 2016,
-          'end_year': 0
+        gae: {
+          start_year: 2016,
+          end_year: 0
         },
-        'g': {
-          'start_year': 2016,
-          'end_year': 0
+        g: {
+          start_year: 2016,
+          end_year: 0
         },
-        'gl': {
-          'start_year': 2017,
-          'end_year': 0
+        gl: {
+          start_year: 2017,
+          end_year: 0
         }
       };
 
+      this.monthMap = {
+        '1': 'january',
+        a: 'january',
+        '2': 'february',
+        b: 'february',
+        '3': 'march',
+        c: 'march',
+        '4': 'april',
+        d: 'april',
+        '5': 'may',
+        e: 'may',
+        '6': 'june',
+        f: 'june',
+        '7': 'july',
+        g: 'july',
+        '8': 'august',
+        h: 'august',
+        '9': 'september',
+        i: 'september',
+        j: 'october',
+        k: 'november',
+        l: 'december'
+      };
+
       this.formats = {
-        'GE0XX00000R': {
+        GE0XX00000R: {
           regex: ['[GE]{2}', '[0-9]', '[A-L]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[R]'],
-          'maxlength': 11
+          maxlength: 11
         },
-        'GE0XX000000': {
+        GE0XX000000: {
           regex: ['[GE]{2}', '[0-9]', '[A-L]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'],
-          'maxlength': 11
+          maxlength: 11
         },
-        'XX0XX00000': {
+        XX0XX00000: {
           regex: ['[GE|NH]{2}', '[0-9]', '[A-L]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'],
-          'maxlength': 10
+          maxlength: 10
         },
-        'XX0X00X000': {
+        XX0X00X000: {
           regex: ['[CG|AG|MJ|MU|DA]{2}', '[0-9]', '[(1-9)|(JKL)]', '[0-3]', '[0-9]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]'],
-          'maxlength': 10
+          maxlength: 10
         },
-        'LA0XX000000': {
-          regex: ['[LA]{2}', '[0-9]', '[A-Z]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'],
-          'maxlength': 11
+        LA0XX000000: {
+          regex: ['[LA]{2}', '[0-9]', '[A-Z]', // I have seen a serial with an "S" here, so above rules don't work for month.
+          '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'],
+          maxlength: 11
         }
       };
     }
@@ -132,7 +157,6 @@
       key: 'getFormat',
       value: function getFormat(string) {
         var full = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
 
         var length = string.length;
         if (length < 2) {
@@ -159,17 +183,14 @@
             //for(let i = 0; i < length; i++) {
             for (var i = 0; i < addCount; i++) {
               // Access format object like an array so converts to php.
-              //if (i < this.formats[format]['regex'].length) {
-              //regex = regex + this.formats[format]['regex'][i];
               regex.push(this.formats[format]['regex'][i]);
-              //}
             }
 
             if (full) {
               regex.push('$');
             }
             var regexString = regex.join('');
-            //console.log(regexString);
+
             if (string.toUpperCase().match(regexString)) {
               return format;
             }
@@ -187,6 +208,44 @@
           return true;
         }
         return false;
+      }
+    }, {
+      key: 'getDateData',
+      value: function getDateData(serial) {
+        var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+        var mk = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+        var val = {
+          day: '0',
+          month: '',
+          years: []
+        };
+        format = format ? format : this.getFormat(serial);
+        if (format) {
+          if (format == 'XX0X00X000') {
+            // get the day.
+            val['day'].push(serial.substr(4, 2));
+          }
+          // month.
+          val['month'] = this.monthMap[serial.substr(3, 1)];
+
+          // years.
+          var yearval = serial.substr(2, 1);
+          var startyear = 1979;
+          if (yearval < 9) {
+            startyear = startyear + (yearval + 1);
+          }
+          for (var i = startyear; i < 2018; i += 10) {
+            if (mk) {
+              if (i >= this.mks[mk]['start_year'] || i <= this.mks[mk]['end_year']) {
+                val['years'].push(i);
+              }
+            } else {
+              val['years'].push(i);
+            }
+          }
+        }
+        return val;
       }
     }]);
 
