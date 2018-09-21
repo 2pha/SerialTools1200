@@ -55,7 +55,8 @@ const GE0XX00000R = [
   'GE0GF01082R',
   'GE8AD01111R',
   'GE7LC01168R',
-  'GE6HB01016R'
+  'GE6HB01016R',
+  'GE6SD01051R'
 ];
 
 const GE0XX000000 = [
@@ -64,7 +65,7 @@ const GE0XX000000 = [
   'GE3IA001117',
   'GE3IA001120',
   'GE9JC001076',
-  'GE2LA001114',
+  'GE2LA001114'
 ];
 
 const XX0XX00000 = [
@@ -96,104 +97,129 @@ const inValid = [
   'MH2BF2MS56'
 ];
 
-const serials = [
-  GE0XX00000R,
-  GE0XX000000,
-  XX0XX00000,
-  XX0X00X000
-];
+const dateTests = {
+  GE5HS60790: {
+    type: 'mk2',
+    dateData: {
+      day: 0,
+      month: 8,
+      years: [1985, 1995, 2005]
+    }
+  },
+  MJ6109F047: {
+    type: 'mk2',
+    dateData: {
+      day: 9,
+      month: 1,
+      years: [1986, 1996, 2006]
+    }
+  }
+};
+
+const serials = [GE0XX00000R, GE0XX000000, XX0XX00000, XX0X00X000];
 console.log(SerialTools1200);
 const st = new SerialTools1200.SerialTools1200();
 
-describe('get Format', function(){
-
-  describe('GE0XX00000R', function(){
-    serials[0].forEach(function(serial){
-      it('GE0XX00000R format '+serial, function(){
+describe('get Format', function() {
+  describe('GE0XX00000R', function() {
+    serials[0].forEach(function(serial) {
+      it('GE0XX00000R format ' + serial, function() {
         assert.equal(st.getFormat(serial), 'GE0XX00000R');
       });
     });
   });
 
-  describe('GE0XX000000', function(){
-    serials[1].forEach(function(serial){
-      it('GE0XX000000 format '+serial, function(){
+  describe('GE0XX000000', function() {
+    serials[1].forEach(function(serial) {
+      it('GE0XX000000 format ' + serial, function() {
         assert.equal(st.getFormat(serial), 'GE0XX000000');
       });
     });
   });
 
-  describe('XX0XX00000', function(){
-    serials[2].forEach(function(serial){
-      it('XX0XX00000 format '+serial, function(){
+  describe('XX0XX00000', function() {
+    serials[2].forEach(function(serial) {
+      it('XX0XX00000 format ' + serial, function() {
         assert.equal(st.getFormat(serial), 'XX0XX00000');
       });
     });
   });
 
-  describe('XX0X00X000', function(){
-    serials[3].forEach(function(serial){
-      it('XX0X00X000 format '+serial, function(){
+  describe('XX0X00X000', function() {
+    serials[3].forEach(function(serial) {
+      it('XX0X00X000 format ' + serial, function() {
         assert.equal(st.getFormat(serial), 'XX0X00X000');
       });
     });
   });
-
 });
 
-
-describe('Is valid', function(){
-  serials.forEach(function(serialitems){
-    serialitems.forEach(function(serial){
-      it(serial+' is valid', function(){
+describe('Is valid', function() {
+  serials.forEach(function(serialitems) {
+    serialitems.forEach(function(serial) {
+      it(serial + ' is valid', function() {
         assert.equal(st.isValid(serial), true);
       });
     });
   });
 });
 
-describe('Partially Valid', function(){
-  serials.forEach(function(serialItems){
-    serialItems.forEach(function(serial){
+describe('Partially Valid', function() {
+  serials.forEach(function(serialItems) {
+    serialItems.forEach(function(serial) {
       // remove a couple of digits from serial.
       let s = serial.slice(0, -3);
-      it(s+' partially valid', function(){
+      it(s + ' partially valid', function() {
         assert.equal(st.isValid(s, false), true);
       });
     });
   });
 });
 
-describe('Partially Valid check full', function(){
-  serials.forEach(function(serialItems){
-    serialItems.forEach(function(serial){
+describe('Partially Valid check full', function() {
+  serials.forEach(function(serialItems) {
+    serialItems.forEach(function(serial) {
       // remove a couple of digits from serial.
       let s = serial.slice(0, -3);
-      it(s+' partial but check full', function(){
+      it(s + ' partial but check full', function() {
         assert.equal(st.isValid(s, true), false);
       });
     });
   });
 });
 
-describe('Too long', function(){
-  serials.forEach(function(serialItems){
-    serialItems.forEach(function(serial){
+describe('Too long', function() {
+  serials.forEach(function(serialItems) {
+    serialItems.forEach(function(serial) {
       // remove a couple of digits from serial.
-      let s = serial+'01';
-      it(s+' Too Long', function(){
+      let s = serial + '01';
+      it(s + ' Too Long', function() {
         assert.equal(st.isValid(s), false);
       });
     });
   });
 });
 
-describe('is not valid', function(){
-  inValid.forEach(function(serial){
-    it(serial+' is not valid', function(){
+describe('is not valid', function() {
+  inValid.forEach(function(serial) {
+    it(serial + ' is not valid', function() {
       assert.equal(st.isValid(serial), false);
     });
   });
+});
+
+describe('date test', function() {
+  for (serial in dateTests) {
+    it(serial + ' date test', function() {
+      assert.deepEqual(
+        st.getDateData(serial, false, dateTests[serial].type),
+        dateTests[serial].dateData
+      );
+    });
+  }
+  //dateTests.forEach(function(serial) {
+  //console.log(serial);
+  //});
 });
 
 /*

@@ -62,27 +62,28 @@ export class SerialTools1200 {
     };
 
     this.monthMap = {
-      '1': 'january',
-      a: 'january',
-      '2': 'february',
-      b: 'february',
-      '3': 'march',
-      c: 'march',
-      '4': 'april',
-      d: 'april',
-      '5': 'may',
-      e: 'may',
-      '6': 'june',
-      f: 'june',
-      '7': 'july',
-      g: 'july',
-      '8': 'august',
-      h: 'august',
-      '9': 'september',
-      i: 'september',
-      j: 'october',
-      k: 'november',
-      l: 'december'
+      '1': 1,
+      A: 1,
+      '2': 2,
+      B: 2,
+      '3': 3,
+      C: 3,
+      '4': 4,
+      D: 4,
+      '5': 5,
+      E: 5,
+      '6': 6,
+      F: 6,
+      '7': 7,
+      G: 7,
+      '8': 8,
+      H: 8,
+      S: 8,
+      '9': 9,
+      I: 9,
+      J: 10,
+      K: 11,
+      L: 12
     };
 
     this.formats = {
@@ -90,7 +91,7 @@ export class SerialTools1200 {
         regex: [
           '[GE]{2}',
           '[0-9]',
-          '[A-L]',
+          '[A-LS]',
           '[A-Z]',
           '[0-9]',
           '[0-9]',
@@ -105,7 +106,7 @@ export class SerialTools1200 {
         regex: [
           '[GE]{2}',
           '[0-9]',
-          '[A-L]',
+          '[A-LS]',
           '[A-Z]',
           '[0-9]',
           '[0-9]',
@@ -120,7 +121,7 @@ export class SerialTools1200 {
         regex: [
           '[GE|NH]{2}',
           '[0-9]',
-          '[A-L]',
+          '[A-LS]',
           '[A-Z]',
           '[0-9]',
           '[0-9]',
@@ -134,9 +135,9 @@ export class SerialTools1200 {
         regex: [
           '[CG|AG|MJ|MU|DA]{2}',
           '[0-9]',
-          '[(1-9)|(JKL)]',
-          '[0-3]',
-          '[0-9]',
+          '[(1-9)|(JKLS)]',
+          '[0-3]', // maybe these should be (0[1-9]|[12]\d|3[01])
+          '[0-9]', //
           '[A-Z]',
           '[0-9]',
           '[0-9]',
@@ -148,7 +149,7 @@ export class SerialTools1200 {
         regex: [
           '[LA]{2}',
           '[0-9]',
-          '[A-Z]', // I have seen a serial with an "S" here, so above rules don't work for month.
+          '[A-LS]',
           '[A-Z]',
           '[0-9]',
           '[0-9]',
@@ -214,29 +215,39 @@ export class SerialTools1200 {
 
   getDateData(serial, format = false, mk = false) {
     let val = {
-      day: '0',
-      month: '',
+      day: 0,
+      month: 0,
       years: []
     };
+
     format = format ? format : this.getFormat(serial);
+
     if (format) {
       if (format == 'XX0X00X000') {
         // get the day.
-        val['day'].push(serial.substr(4, 2));
+        let dayval = serial.substr(4, 2);
+        let daynum = parseInt(dayval);
+        if (daynum > 0 && daynum <= 31) {
+          val['day'] = parseInt(dayval);
+        }
       }
       // month.
+
       val['month'] = this.monthMap[serial.substr(3, 1)];
 
       // years.
       let yearval = serial.substr(2, 1);
+      yearval = parseInt(yearval);
+
       let startyear = 1979;
       if (yearval < 9) {
         startyear = startyear + (yearval + 1);
       }
+
       for (let i = startyear; i < 2018; i += 10) {
         if (mk) {
           if (
-            i >= this.mks[mk]['start_year'] ||
+            i >= this.mks[mk]['start_year'] &&
             i <= this.mks[mk]['end_year']
           ) {
             val['years'].push(i);
