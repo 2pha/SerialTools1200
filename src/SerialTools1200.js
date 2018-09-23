@@ -220,7 +220,7 @@ export class SerialTools1200 {
       years: []
     };
 
-    format = format ? format : this.getFormat(serial);
+    format = format ? format : this.getFormat(serial, true);
 
     if (format) {
       if (format == 'XX0X00X000') {
@@ -246,10 +246,10 @@ export class SerialTools1200 {
 
       for (let i = startyear; i < 2018; i += 10) {
         if (mk) {
-          if (
-            i >= this.mks[mk]['start_year'] &&
-            i <= this.mks[mk]['end_year']
-          ) {
+          // js2php can't combine if statements well, so do 2.
+          if (i >= this.mks[mk]['start_year'] && i <= this.mks[mk]['end_year']) {
+            val['years'].push(i);
+          } else if (i >= this.mks[mk]['start_year'] && this.mks[mk]['end_year'] == 0) {
             val['years'].push(i);
           }
         } else {

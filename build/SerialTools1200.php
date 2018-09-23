@@ -38,22 +38,24 @@ return true;
 }
 public function getDateData($serial, $format = false, $mk = false) {
 $val = array("day" => 0, "month" => 0, "years" => array());
-$format = ($format) ? $format : $this->getFormat($serial);
+$format = ($format) ? $format : $this->getFormat($serial, true);
 if ($format) {
 if ($format == 'XX0X00X000') {
 $dayval = substr($serial, 4, 2);
-$daynum = parseInt($dayval);
+$daynum = intval($dayval);
 if ($daynum > 0 && $daynum <= 31) {
-$val['day'] = parseInt($dayval);
+$val['day'] = intval($dayval);
 }}$val['month'] = $this->monthMap[substr($serial, 3, 1)];
 $yearval = substr($serial, 2, 1);
-$yearval = parseInt($yearval);
+$yearval = intval($yearval);
 $startyear = 1979;
 if ($yearval < 9) {
 $startyear = $startyear + $yearval + 1;
 }for ($i = $startyear;
 $i < 2018;$i += 10) {if ($mk) {
 if ($i >= $this->mks[$mk]['start_year'] && $i <= $this->mks[$mk]['end_year']) {
+array_push($val['years'], $i);
+} else if ($i >= $this->mks[$mk]['start_year'] && $this->mks[$mk]['end_year'] == 0) {
 array_push($val['years'], $i);
 }} else {array_push($val['years'], $i);
 }}}return $val;

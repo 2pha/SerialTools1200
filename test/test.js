@@ -88,6 +88,19 @@ const XX0X00X000 = [
   'AG7928F375'
 ];
 
+const LA0XX000000 = [
+  'LA6DA001164',
+  'LA6DA001099',
+  'LA6GA001042',
+  'LA6DA001166',
+  'LA7KA001024',
+  'LA6SA001167',
+  'LA7CA001121',
+  'LA7EA001087',
+  'LA7JA001072',
+  'LA7JA001070'
+];
+
 const inValid = [
   'GEGIA001117',
   'GE3IA00111Y',
@@ -113,10 +126,18 @@ const dateTests = {
       month: 1,
       years: [1986, 1996, 2006]
     }
+  },
+  LA6DA001164: {
+    type: 'gae',
+    dateData: {
+      day: 0,
+      month: 4,
+      years: [2016]
+    }
   }
 };
 
-const serials = [GE0XX00000R, GE0XX000000, XX0XX00000, XX0X00X000];
+const serials = [GE0XX00000R, GE0XX000000, XX0XX00000, XX0X00X000, LA0XX000000];
 console.log(SerialTools1200);
 const st = new SerialTools1200.SerialTools1200();
 
@@ -149,6 +170,14 @@ describe('get Format', function() {
     serials[3].forEach(function(serial) {
       it('XX0X00X000 format ' + serial, function() {
         assert.equal(st.getFormat(serial), 'XX0X00X000');
+      });
+    });
+  });
+
+  describe('LA0XX000000', function() {
+    serials[4].forEach(function(serial) {
+      it('LA0XX000000 format ' + serial, function() {
+        assert.equal(st.getFormat(serial), 'LA0XX000000');
       });
     });
   });

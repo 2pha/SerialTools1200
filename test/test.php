@@ -41,11 +41,25 @@ $XX0X00X000 = [
   'AG7928F375'
 ];
 
+$LA0XX000000 = [
+  'LA6DA001164',
+  'LA6DA001099',
+  'LA6GA001042',
+  'LA6DA001166',
+  'LA7KA001024',
+  'LA6SA001167',
+  'LA7CA001121',
+  'LA7EA001087',
+  'LA7JA001072',
+  'LA7JA001070'
+];
+
 $serials = [
   'GE0XX00000R' => $GE0XX00000R,
   'GE0XX000000' => $GE0XX000000,
   'XX0XX00000' => $XX0XX00000,
-  'XX0X00X000' => $XX0X00X000
+  'XX0X00X000' => $XX0X00X000,
+  'LA0XX000000' => $LA0XX000000
 ];
 
 
@@ -56,6 +70,33 @@ $inValid = [
   'MH2ZF266i6',
   'MH2BFPPP',
   'MH2BF2MS56'
+];
+
+$dateTests = [
+  'GE5HS60790' => [
+    'type' => 'mk2',
+    'dateData' => [
+      'day' => 0,
+      'month' => 8,
+      'years' => [1985, 1995, 2005]
+    ]
+  ],
+  'MJ6109F047' => [
+    'type' => 'mk2',
+    'dateData' => [
+      'day' => 9,
+      'month' => 1,
+      'years' => [1986, 1996, 2006]
+    ]
+  ],
+  'LA6DA001164' => [
+    'type' => 'gae',
+    'dateData' => [
+      'day' => 0,
+      'month' => 4,
+      'years' => [2016]
+    ]
+  ]
 ];
 
 function valueToString( $value ){
@@ -119,6 +160,13 @@ function invalidTest($serials, $st) {
   }
 }
 
+function dateTest($serials, $st) {
+  echo 'testing dates '.PHP_EOL;
+  foreach($serials as $s => $value) {
+    result('dates ', $s, arrayEqual($st->getDateData($s, false, $value['type']), $value['dateData']));
+  }
+}
+
 function result($check, $serial, $pass) {
   if($pass){
     echo "\033[32m $check $serial Pass \033[0m \n";
@@ -127,9 +175,14 @@ function result($check, $serial, $pass) {
   }
 }
 
+function arrayEqual($array1, $array2) {
+  return $array1 === $array2;
+}
+
 getFormatTest($serials, $st);
 validTest($serials, $st);
 partialTest($serials, $st);
 partialFullTest($serials, $st);
 tooLongTest($serials, $st);
 invalidTest($inValid, $st);
+dateTest($dateTests, $st);
