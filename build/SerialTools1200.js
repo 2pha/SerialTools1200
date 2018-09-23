@@ -45,6 +45,8 @@
     function SerialTools1200() {
       _classCallCheck(this, SerialTools1200);
 
+      // js2php doesn't work with dates, add this so it can be set.
+      this.currentYear = 2018;
       this.mks = {
         mk2: {
           start_year: 1979,
@@ -247,7 +249,7 @@
             startyear = startyear + (yearval + 1);
           }
 
-          for (var i = startyear; i < 2018; i += 10) {
+          for (var i = startyear; i < this.currentYear; i += 10) {
             if (mk) {
               // js2php can't combine if statements well, so do 2.
               if (i >= this.mks[mk]['start_year'] && i <= this.mks[mk]['end_year']) {
