@@ -268,5 +268,3 @@ export class SerialTools1200 {
     return val;
   }
 }
-
-//export default {SerialTools1200}
