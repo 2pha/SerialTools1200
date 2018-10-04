@@ -2,6 +2,7 @@
   "name": "serial-tools-1200",
   "version": "1.0.0",
   "description": "",
+  "main": "build/SerialTools1200",
   "scripts": {
     "test": "mocha",
     "testphp": "php ./test/test.php",
@@ -12,6 +13,10 @@
   },
   "author": "Chris 2pha Brown",
   "license": "Apache-2.0",
+  "repository": "github:2pha/SerialTools1200",
+  "eslintConfig": {
+    "extends": "airbnb-base"
+  },
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
