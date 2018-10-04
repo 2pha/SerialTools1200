@@ -9,8 +9,9 @@
     "testall": "npm test && npm run testphp",
     "build": "./node_modules/.bin/babel src -d build",
     "buildphp": "./node_modules/.bin/js2php src/SerialTools1200.js > ./build/SerialTools1200.php && node quickfixes.js",
+    "formatphp": "phpcbf -q ./build/SerialTools1200.php --standard=MySource; exit 0",
     "buildes6": "cp ./src/SerialTools1200.js ./build/SerialTools1200.mjs",
-    "buildall": "npm run build && npm run buildphp && npm run buildes6"
+    "buildall": "npm run build && npm run buildes6 && npm run buildphp && npm run formatphp"
   },
   "author": "Chris 2pha Brown",
   "license": "Apache-2.0",
