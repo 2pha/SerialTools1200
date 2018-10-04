@@ -1,4 +1,4 @@
-////@ts-check
+/* //@ts-check */
 
 export class SerialTools1200 {
   constructor() {
@@ -7,85 +7,85 @@ export class SerialTools1200 {
     this.mks = {
       mk2: {
         start_year: 1979,
-        end_year: 2010
+        end_year: 2010,
       },
       mk3: {
         start_year: 1989,
-        end_year: 1998
+        end_year: 1998,
       },
       mk4: {
         start_year: 1996,
-        end_year: 2005
+        end_year: 2005,
       },
       mk3d: {
         start_year: 1997,
-        end_year: 2002
+        end_year: 2002,
       },
       m3d: {
         start_year: 1997,
-        end_year: 2002
+        end_year: 2002,
       },
       ltd: {
         start_year: 1995,
-        end_year: 2002
+        end_year: 2002,
       },
       mk5: {
         start_year: 2002,
-        end_year: 2010
+        end_year: 2010,
       },
       mk5g: {
         start_year: 2002,
-        end_year: 2010
+        end_year: 2010,
       },
       m5g: {
         start_year: 2002,
-        end_year: 2010
+        end_year: 2010,
       },
       gld: {
         start_year: 2004,
-        end_year: 2004
+        end_year: 2004,
       },
       mk6: {
         start_year: 2007,
-        end_year: 2010
+        end_year: 2010,
       },
       gae: {
         start_year: 2016,
-        end_year: 0
+        end_year: 0,
       },
       g: {
         start_year: 2016,
-        end_year: 0
+        end_year: 0,
       },
       gl: {
         start_year: 2017,
-        end_year: 0
-      }
+        end_year: 0,
+      },
     };
 
     this.monthMap = {
-      '1': 1,
+      1: 1,
       A: 1,
-      '2': 2,
+      2: 2,
       B: 2,
-      '3': 3,
+      3: 3,
       C: 3,
-      '4': 4,
+      4: 4,
       D: 4,
-      '5': 5,
+      5: 5,
       E: 5,
-      '6': 6,
+      6: 6,
       F: 6,
-      '7': 7,
+      7: 7,
       G: 7,
-      '8': 8,
+      8: 8,
       H: 8,
       S: 8,
-      '9': 9,
+      9: 9,
       I: 9,
       J: 10,
       K: 11,
-      L: 12
+      L: 12,
     };
 
     this.formats = {
@@ -100,9 +100,9 @@ export class SerialTools1200 {
           '[0-9]',
           '[0-9]',
           '[0-9]',
-          '[R]'
+          '[R]',
         ],
-        maxlength: 11
+        maxlength: 11,
       },
       GE0XX000000: {
         regex: [
@@ -115,9 +115,9 @@ export class SerialTools1200 {
           '[0-9]',
           '[0-9]',
           '[0-9]',
-          '[0-9]'
+          '[0-9]',
         ],
-        maxlength: 11
+        maxlength: 11,
       },
       XX0XX00000: {
         regex: [
@@ -129,9 +129,9 @@ export class SerialTools1200 {
           '[0-9]',
           '[0-9]',
           '[0-9]',
-          '[0-9]'
+          '[0-9]',
         ],
-        maxlength: 10
+        maxlength: 10,
       },
       XX0X00X000: {
         regex: [
@@ -143,9 +143,9 @@ export class SerialTools1200 {
           '[A-Z]',
           '[0-9]',
           '[0-9]',
-          '[0-9]'
+          '[0-9]',
         ],
-        maxlength: 10
+        maxlength: 10,
       },
       LA0XX000000: {
         regex: [
@@ -158,21 +158,21 @@ export class SerialTools1200 {
           '[0-9]',
           '[0-9]',
           '[0-9]',
-          '[0-9]'
+          '[0-9]',
         ],
-        maxlength: 11
-      }
+        maxlength: 11,
+      },
     };
   }
 
   getFormat(string, full = true) {
-    let length = string.length;
+    const length = string.length;
     if (length < 2) {
       return false;
     }
 
     // Use a for loop so can convert to PHP.
-    for (let format in this.formats) {
+    for (const format in this.formats) {
       let skip = false;
       if (length > this.formats[format]['maxlength']) {
         skip = true;
@@ -187,8 +187,8 @@ export class SerialTools1200 {
         }
 
         // Put it into an array, because php conversion does not work well with string cancatination.
-        let regex = ['^'];
-        //for(let i = 0; i < length; i++) {
+        const regex = ['^'];
+        // for(let i = 0; i < length; i++) {
         for (let i = 0; i < addCount; i++) {
           // Access format object like an array so converts to php.
           regex.push(this.formats[format]['regex'][i]);
@@ -197,7 +197,7 @@ export class SerialTools1200 {
         if (full) {
           regex.push('$');
         }
-        let regexString = regex.join('');
+        const regexString = regex.join('');
 
         if (string.toUpperCase().match(regexString)) {
           return format;
@@ -216,19 +216,19 @@ export class SerialTools1200 {
   }
 
   getDateData(serial, format = false, mk = false) {
-    let val = {
+    const val = {
       day: 0,
       month: 0,
-      years: []
+      years: [],
     };
 
-    format = format ? format : this.getFormat(serial, true);
+    format = format || this.getFormat(serial, true);
 
     if (format) {
       if (format == 'XX0X00X000') {
         // get the day.
-        let dayval = serial.substr(4, 2);
-        let daynum = parseInt(dayval);
+        const dayval = serial.substr(4, 2);
+        const daynum = parseInt(dayval);
         if (daynum > 0 && daynum <= 31) {
           val['day'] = parseInt(dayval);
         }
@@ -243,21 +243,15 @@ export class SerialTools1200 {
 
       let startyear = 1979;
       if (yearval < 9) {
-        startyear = startyear + (yearval + 1);
+        startyear += yearval + 1;
       }
 
       for (let i = startyear; i < this.currentYear; i += 10) {
         if (mk) {
           // js2php can't combine if statements well, so do 2.
-          if (
-            i >= this.mks[mk]['start_year'] &&
-            i <= this.mks[mk]['end_year']
-          ) {
+          if (i >= this.mks[mk]['start_year'] && i <= this.mks[mk]['end_year']) {
             val['years'].push(i);
-          } else if (
-            i >= this.mks[mk]['start_year'] &&
-            this.mks[mk]['end_year'] == 0
-          ) {
+          } else if (i >= this.mks[mk]['start_year'] && this.mks[mk]['end_year'] == 0) {
             val['years'].push(i);
           }
         } else {

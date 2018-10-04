@@ -1,0 +1,7 @@
+{
+  "extends": "airbnb-base",
+  "rules": {
+    "dot-notation": 0,
+    "import/prefer-default-export": ["off"]
+  }
+}

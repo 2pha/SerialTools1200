@@ -40,7 +40,7 @@ return true;
 }
 public function getDateData($serial, $format = false, $mk = false) {
 $val = array("day" => 0, "month" => 0, "years" => array());
-$format = ($format) ? $format : $this->getFormat($serial, true);
+$format = $format || $this->getFormat($serial, true);
 if ($format) {
 if ($format == 'XX0X00X000') {
 $dayval = substr($serial, 4, 2);
@@ -52,7 +52,7 @@ $yearval = substr($serial, 2, 1);
 $yearval = intval($yearval);
 $startyear = 1979;
 if ($yearval < 9) {
-$startyear = $startyear + $yearval + 1;
+$startyear += $yearval + 1;
 }for ($i = $startyear;
 $i < $this->currentYear;$i += 10) {if ($mk) {
 if ($i >= $this->mks[$mk]['start_year'] && $i <= $this->mks[$mk]['end_year']) {

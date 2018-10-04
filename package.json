@@ -10,25 +10,21 @@
     "build": "./node_modules/.bin/babel src -d build",
     "buildphp": "./node_modules/.bin/js2php src/SerialTools1200.js > ./build/SerialTools1200.php && node quickfixes.js",
     "buildes6": "cp ./src/SerialTools1200.js ./build/SerialTools1200.mjs",
-    "buildall": "npm run build && npm run buildphp"
+    "buildall": "npm run build && npm run buildphp && npm run buildes6"
   },
   "author": "Chris 2pha Brown",
   "license": "Apache-2.0",
   "repository": "github:2pha/SerialTools1200",
-  "eslintConfig": {
-    "extends": "airbnb-base"
-  },
   "dependencies": {},
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-external-helpers": "^6.22.0",
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "js2php": "git+https://github.com/2pha/js2php.git",
-    "mocha": "^4.1.0",
-    "prettier-eslint": "^8.8.2"
+    "mocha": "^4.1.0"
   }
 }
