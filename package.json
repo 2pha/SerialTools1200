@@ -9,6 +9,7 @@
     "testall": "npm test && npm run testphp",
     "build": "./node_modules/.bin/babel src -d build",
     "buildphp": "./node_modules/.bin/js2php src/SerialTools1200.js > ./build/SerialTools1200.php && node quickfixes.js",
+    "buildes6": "cp ./src/SerialTools1200.js ./build/SerialTools1200.mjs",
     "buildall": "npm run build && npm run buildphp"
   },
   "author": "Chris 2pha Brown",
