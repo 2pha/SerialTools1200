@@ -177,6 +177,9 @@ export class SerialTools1200 {
       },
     };
 
+    // Make sure it is uppercase.
+    string = string.toUpperCase();
+
     // Loop over the formats checking validity.
     const regexAddCount = string.length - 1;
     for (const format in this.formats) {
@@ -190,7 +193,7 @@ export class SerialTools1200 {
         }
         regex.push('$');
         const regexString = regex.join('');
-        if (string.toUpperCase().match(regexString)) {
+        if (string.match(regexString)) {
           results['partiallyValid'] = true;
         }
       }
@@ -203,7 +206,7 @@ export class SerialTools1200 {
         }
         regex.push('$');
         const regexString = regex.join('');
-        if (string.toUpperCase().match(regexString)) {
+        if (string.match(regexString)) {
           results['fullyValid'] = true;
           results['format'] = format;
         }

@@ -141,7 +141,9 @@ function () {
           month: 0,
           years: []
         }
-      }; // Loop over the formats checking validity.
+      }; // Make sure it is uppercase.
+
+      string = string.toUpperCase(); // Loop over the formats checking validity.
 
       var regexAddCount = string.length - 1;
 
@@ -159,7 +161,7 @@ function () {
           regex.push('$');
           var regexString = regex.join('');
 
-          if (string.toUpperCase().match(regexString)) {
+          if (string.match(regexString)) {
             results['partiallyValid'] = true;
           }
         } // Check full
@@ -176,7 +178,7 @@ function () {
 
           var _regexString = _regex.join('');
 
-          if (string.toUpperCase().match(_regexString)) {
+          if (string.match(_regexString)) {
             results['fullyValid'] = true;
             results['format'] = format;
           }

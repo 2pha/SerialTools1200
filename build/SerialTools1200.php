@@ -182,6 +182,7 @@ class SerialTools1200
                 'years' => [],
             ],
         ];
+        $string        = strtoupper($string);
         $regexAddCount = (strlen($string) - 1);
         foreach ($this->formats as $format => $___) {
             if (!$results['partiallyValid'] && strlen($string) <= $this->formats[$format]['maxlength']) {
@@ -191,7 +192,7 @@ class SerialTools1200
                         array_push($regex, $this->formats[$format]['regex'][$i]);
                 }array_push($regex, '$');
                 $regexString = join('', $regex);
-                if (preg_match('/'.$regexString.'/', strtoupper($string))) {
+                if (preg_match('/'.$regexString.'/', $string)) {
                     $results['partiallyValid'] = true;
                 }
             }if (!$results['fullyValid']) {
@@ -201,7 +202,7 @@ class SerialTools1200
                     array_push($regex, $this->formats[$format]['regex'][$i]);
                 }array_push($regex, '$');
                 $regexString = join('', $regex);
-                if (preg_match('/'.$regexString.'/', strtoupper($string))) {
+                if (preg_match('/'.$regexString.'/', $string)) {
                     $results['fullyValid'] = true;
                     $results['format']     = $format;
                 }
