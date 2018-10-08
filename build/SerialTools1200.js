@@ -129,114 +129,100 @@ function () {
   }
 
   _createClass(SerialTools1200, [{
-    key: "getFormat",
-    value: function getFormat(string) {
-      var full = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-      var length = string.length;
+    key: "check",
+    value: function check(string) {
+      var mk = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var results = {
+        partiallyValid: false,
+        fullyValid: false,
+        format: '',
+        dateData: {
+          day: 0,
+          month: 0,
+          years: []
+        }
+      }; // Loop over the formats checking validity.
 
-      if (length < 2) {
-        return false;
-      } // Use a for loop so can convert to PHP.
-
+      var regexAddCount = string.length - 1;
 
       for (var format in this.formats) {
-        var skip = false;
+        // Check partial.
+        if (!results['partiallyValid'] && string.length <= this.formats[format]['maxlength']) {
+          // Put it into an array, because php conversion does not work well with string cancatination.
+          var regex = ['^'];
 
-        if (length > this.formats[format]['maxlength']) {
-          skip = true;
-        }
-
-        if (!skip) {
-          var addCount = 0;
-
-          if (full) {
-            addCount = this.formats[format]['regex'].length;
-          } else {
-            string.length - 1;
-          } // Put it into an array, because php conversion does not work well with string cancatination.
-
-
-          var regex = ['^']; // for(let i = 0; i < length; i++) {
-
-          for (var i = 0; i < addCount; i++) {
+          for (var i = 0; i < regexAddCount; i++) {
             // Access format object like an array so converts to php.
             regex.push(this.formats[format]['regex'][i]);
           }
 
-          if (full) {
-            regex.push('$');
-          }
-
+          regex.push('$');
           var regexString = regex.join('');
 
           if (string.toUpperCase().match(regexString)) {
-            return format;
+            results['partiallyValid'] = true;
           }
-        }
-      }
+        } // Check full
 
-      return false;
-    }
-  }, {
-    key: "isValid",
-    value: function isValid(string) {
-      var full = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-      if (this.getFormat(string, full)) {
-        return true;
-      }
+        if (!results['fullyValid']) {
+          var _regex = ['^'];
 
-      return false;
-    }
-  }, {
-    key: "getDateData",
-    value: function getDateData(serial) {
-      var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var mk = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-      var val = {
-        day: 0,
-        month: 0,
-        years: []
-      };
-      format = format || this.getFormat(serial, true);
-
-      if (format) {
-        if (format == 'XX0X00X000') {
-          // get the day.
-          var dayval = serial.substr(4, 2);
-          var daynum = parseInt(dayval);
-
-          if (daynum > 0 && daynum <= 31) {
-            val['day'] = parseInt(dayval);
+          for (var _i = 0; _i < this.formats[format]['regex'].length; _i++) {
+            _regex.push(this.formats[format]['regex'][_i]);
           }
-        } // month.
+
+          _regex.push('$');
+
+          var _regexString = _regex.join('');
+
+          if (string.toUpperCase().match(_regexString)) {
+            results['fullyValid'] = true;
+            results['format'] = format;
+          }
+        } // Add the date data if fully valid.
 
 
-        val['month'] = this.monthMap[serial.substr(3, 1)]; // years.
+        if (results['fullyValid']) {
+          if (results['format'] == 'XX0X00X000') {
+            // Day.
+            var dayval = string.substr(4, 2);
+            var daynum = parseInt(dayval);
 
-        var yearval = serial.substr(2, 1);
-        yearval = parseInt(yearval);
-        var startyear = 1979;
-
-        if (yearval < 9) {
-          startyear += yearval + 1;
-        }
-
-        for (var i = startyear; i < this.currentYear; i += 10) {
-          if (mk) {
-            // js2php can't combine if statements well, so do 2.
-            if (i >= this.mks[mk]['start_year'] && i <= this.mks[mk]['end_year']) {
-              val['years'].push(i);
-            } else if (i >= this.mks[mk]['start_year'] && this.mks[mk]['end_year'] == 0) {
-              val['years'].push(i);
+            if (daynum > 0 && daynum <= 31) {
+              results['dateData']['day'] = parseInt(dayval);
             }
-          } else {
-            val['years'].push(i);
+          } // Month.
+
+
+          results['dateData']['month'] = this.monthMap[string.substr(3, 1)]; // Years.
+
+          var yearval = string.substr(2, 1);
+          yearval = parseInt(yearval);
+          var startyear = 1979;
+
+          if (yearval < 9) {
+            startyear += yearval + 1;
           }
+
+          for (var _i2 = startyear; _i2 < this.currentYear; _i2 += 10) {
+            if (mk) {
+              // js2php can't combine if statements well, so do 2.
+              if (_i2 >= this.mks[mk]['start_year'] && _i2 <= this.mks[mk]['end_year']) {
+                results['dateData']['years'].push(_i2);
+              } else if (_i2 >= this.mks[mk]['start_year'] && this.mks[mk]['end_year'] == 0) {
+                results['dateData']['years'].push(_i2);
+              }
+            } else {
+              results['dateData']['years'].push(_i2);
+            }
+          }
+
+          return results;
         }
       }
 
-      return val;
+      return results;
     }
   }]);
 

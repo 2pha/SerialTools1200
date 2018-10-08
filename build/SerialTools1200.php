@@ -170,86 +170,72 @@ class SerialTools1200
     }//end __construct()
 
 
-    public function getFormat($string, $full=true)
+    public function check($string, $mk=false)
     {
-        $length = strlen($string);
-        if ($length < 2) {
-            return false;
-        }foreach ($this->formats as $format => $___) {
-            $skip = false;
-            if ($length > $this->formats[$format]['maxlength']) {
-                $skip = true;
-            }if (!$skip) {
-                $addCount = 0;
-                if ($full) {
-                    $addCount = count($this->formats[$format]['regex']);
-                } else {
-                    (strlen($string) - 1);
-                }$regex = ['^'];
+        $results       = [
+            'partiallyValid' => false,
+            'fullyValid'     => false,
+            'format'         => '',
+            'dateData'       => [
+                'day'   => 0,
+                'month' => 0,
+                'years' => [],
+            ],
+        ];
+        $regexAddCount = (strlen($string) - 1);
+        foreach ($this->formats as $format => $___) {
+            if (!$results['partiallyValid'] && strlen($string) <= $this->formats[$format]['maxlength']) {
+                    $regex = ['^'];
                 for ($i = 0;
-                $i < $addCount; $i++) {
-                    array_push($regex, $this->formats[$format]['regex'][$i]);
-                }if ($full) {
-                    array_push($regex, '$');
-                }$regexString = join('', $regex);
+                    $i < $regexAddCount; $i++) {
+                        array_push($regex, $this->formats[$format]['regex'][$i]);
+                }array_push($regex, '$');
+                $regexString = join('', $regex);
                 if (preg_match('/'.$regexString.'/', strtoupper($string))) {
-                    return $format;
+                    $results['partiallyValid'] = true;
                 }
-            }
+            }if (!$results['fullyValid']) {
+                $regex = ['^'];
+                for ($i = 0;
+                $i < count($this->formats[$format]['regex']); $i++) {
+                    array_push($regex, $this->formats[$format]['regex'][$i]);
+                }array_push($regex, '$');
+                $regexString = join('', $regex);
+                if (preg_match('/'.$regexString.'/', strtoupper($string))) {
+                    $results['fullyValid'] = true;
+                    $results['format']     = $format;
+                }
+            }if ($results['fullyValid']) {
+                if ($results['format'] == 'XX0X00X000') {
+                    $dayval = substr($string, 4, 2);
+                    $daynum = intval($dayval);
+                    if ($daynum > 0 && $daynum <= 31) {
+                        $results['dateData']['day'] = intval($dayval);
+                    }
+                }$results['dateData']['month'] = $this->monthMap[substr($string, 3, 1)];
+                $yearval   = substr($string, 2, 1);
+                $yearval   = intval($yearval);
+                $startyear = 1979;
+                if ($yearval < 9) {
+                    $startyear += ($yearval + 1);
+                }for ($i = $startyear;
+                $i < $this->currentYear; $i += 10) {
+                    if ($mk) {
+                        if ($i >= $this->mks[$mk]['start_year'] && $i <= $this->mks[$mk]['end_year']) {
+                            array_push($results['dateData']['years'], $i);
+                        } else if ($i >= $this->mks[$mk]['start_year'] && $this->mks[$mk]['end_year'] == 0) {
+                            array_push($results['dateData']['years'], $i);
+                        }
+                    } else {
+                        array_push($results['dateData']['years'], $i);
+                    }
+                }return $results;
+            }//end if
         }//end foreach
 
-        return false;
+        return $results;
 
-    }//end getFormat()
-
-
-    public function isValid($string, $full=true)
-    {
-        if ($this->getFormat($string, $full)) {
-            return true;
-        }return false;
-
-    }//end isValid()
-
-
-    public function getDateData($serial, $format=false, $mk=false)
-    {
-        $val    = [
-            'day'   => 0,
-            'month' => 0,
-            'years' => [],
-        ];
-        $format = $format || $this->getFormat($serial, true);
-        if ($format) {
-            if ($format == 'XX0X00X000') {
-                $dayval = substr($serial, 4, 2);
-                $daynum = intval($dayval);
-                if ($daynum > 0 && $daynum <= 31) {
-                    $val['day'] = intval($dayval);
-                }
-            }$val['month'] = $this->monthMap[substr($serial, 3, 1)];
-            $yearval       = substr($serial, 2, 1);
-            $yearval       = intval($yearval);
-            $startyear     = 1979;
-            if ($yearval < 9) {
-                $startyear += ($yearval + 1);
-            }for ($i = $startyear;
-            $i < $this->currentYear; $i += 10) {
-                if ($mk) {
-                    if ($i >= $this->mks[$mk]['start_year'] && $i <= $this->mks[$mk]['end_year']) {
-                        array_push($val['years'], $i);
-                    } else if ($i >= $this->mks[$mk]['start_year'] && $this->mks[$mk]['end_year'] == 0) {
-                        array_push($val['years'], $i);
-                    }
-                } else {
-                    array_push($val['years'], $i);
-                }
-            }
-        }//end if
-
-        return $val;
-
-    }//end getDateData()
+    }//end check()
 
 
 }//end class

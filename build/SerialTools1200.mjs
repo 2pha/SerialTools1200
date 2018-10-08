@@ -165,100 +165,87 @@ export class SerialTools1200 {
     };
   }
 
-  getFormat(string, full = true) {
-    const length = string.length;
-    if (length < 2) {
-      return false;
-    }
+  check(string, mk = false) {
+    const results = {
+      partiallyValid: false,
+      fullyValid: false,
+      format: '',
+      dateData: {
+        day: 0,
+        month: 0,
+        years: [],
+      },
+    };
 
-    // Use a for loop so can convert to PHP.
+    // Loop over the formats checking validity.
+    const regexAddCount = string.length - 1;
     for (const format in this.formats) {
-      let skip = false;
-      if (length > this.formats[format]['maxlength']) {
-        skip = true;
-      }
-
-      if (!skip) {
-        let addCount = 0;
-        if (full) {
-          addCount = this.formats[format]['regex'].length;
-        } else {
-          string.length - 1;
-        }
-
+      // Check partial.
+      if (!results['partiallyValid'] && string.length <= this.formats[format]['maxlength']) {
         // Put it into an array, because php conversion does not work well with string cancatination.
         const regex = ['^'];
-        // for(let i = 0; i < length; i++) {
-        for (let i = 0; i < addCount; i++) {
+        for (let i = 0; i < regexAddCount; i++) {
           // Access format object like an array so converts to php.
           regex.push(this.formats[format]['regex'][i]);
         }
-
-        if (full) {
-          regex.push('$');
-        }
+        regex.push('$');
         const regexString = regex.join('');
-
         if (string.toUpperCase().match(regexString)) {
-          return format;
+          results['partiallyValid'] = true;
         }
       }
-    }
 
-    return false;
-  }
-
-  isValid(string, full = true) {
-    if (this.getFormat(string, full)) {
-      return true;
-    }
-    return false;
-  }
-
-  getDateData(serial, format = false, mk = false) {
-    const val = {
-      day: 0,
-      month: 0,
-      years: [],
-    };
-
-    format = format || this.getFormat(serial, true);
-
-    if (format) {
-      if (format == 'XX0X00X000') {
-        // get the day.
-        const dayval = serial.substr(4, 2);
-        const daynum = parseInt(dayval);
-        if (daynum > 0 && daynum <= 31) {
-          val['day'] = parseInt(dayval);
+      // Check full
+      if (!results['fullyValid']) {
+        const regex = ['^'];
+        for (let i = 0; i < this.formats[format]['regex'].length; i++) {
+          regex.push(this.formats[format]['regex'][i]);
+        }
+        regex.push('$');
+        const regexString = regex.join('');
+        if (string.toUpperCase().match(regexString)) {
+          results['fullyValid'] = true;
+          results['format'] = format;
         }
       }
-      // month.
 
-      val['month'] = this.monthMap[serial.substr(3, 1)];
-
-      // years.
-      let yearval = serial.substr(2, 1);
-      yearval = parseInt(yearval);
-
-      let startyear = 1979;
-      if (yearval < 9) {
-        startyear += yearval + 1;
-      }
-
-      for (let i = startyear; i < this.currentYear; i += 10) {
-        if (mk) {
-          // js2php can't combine if statements well, so do 2.
-          if (i >= this.mks[mk]['start_year'] && i <= this.mks[mk]['end_year']) {
-            val['years'].push(i);
-          } else if (i >= this.mks[mk]['start_year'] && this.mks[mk]['end_year'] == 0) {
-            val['years'].push(i);
+      // Add the date data if fully valid.
+      if (results['fullyValid']) {
+        if (results['format'] == 'XX0X00X000') {
+          // Day.
+          const dayval = string.substr(4, 2);
+          const daynum = parseInt(dayval);
+          if (daynum > 0 && daynum <= 31) {
+            results['dateData']['day'] = parseInt(dayval);
           }
-        } else {
-          val['years'].push(i);
         }
+
+        // Month.
+        results['dateData']['month'] = this.monthMap[string.substr(3, 1)];
+
+        // Years.
+        let yearval = string.substr(2, 1);
+        yearval = parseInt(yearval);
+
+        let startyear = 1979;
+        if (yearval < 9) {
+          startyear += yearval + 1;
+        }
+        for (let i = startyear; i < this.currentYear; i += 10) {
+          if (mk) {
+            // js2php can't combine if statements well, so do 2.
+            if (i >= this.mks[mk]['start_year'] && i <= this.mks[mk]['end_year']) {
+              results['dateData']['years'].push(i);
+            } else if (i >= this.mks[mk]['start_year'] && this.mks[mk]['end_year'] == 0) {
+              results['dateData']['years'].push(i);
+            }
+          } else {
+            results['dateData']['years'].push(i);
+          }
+        }
+        return results;
       }
     }
-    return val;
+    return results;
   }
 }

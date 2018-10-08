@@ -99,7 +99,9 @@ $dateTests = [
   ]
 ];
 
-function valueToString( $value ){
+
+
+function valueToString($value){
   return ( !is_bool( $value ) ?  $value : ($value ? 'true' : 'false' )  );
 }
 
@@ -107,7 +109,9 @@ function getFormatTest($serials, $st) {
   foreach($serials as $format => $ss){
     echo 'testing get format '.$format.PHP_EOL;
     foreach($ss as $s) {
-      $returned = (string)$st->getFormat($s);
+      //$returned = (string)getFormat($s, $st);
+      $check = $st->check($s);
+      $returned = $check['format'];
       echo(valueToString($returned).PHP_EOL);
       result('Format', $s, ($returned == $format));
     }
@@ -116,9 +120,10 @@ function getFormatTest($serials, $st) {
 
 function validTest($serials, $st) {
   foreach($serials as $format => $ss){
-    echo 'testing is valid '.$format.PHP_EOL;
+    echo 'testing is fully valid '.$format.PHP_EOL;
     foreach($ss as $s) {
-      result('is valid ', $s, ($st->isValid($s) == true));
+      $check = $st->check($s);
+      result('is fully valid ', $s, ($check['fullyValid'] == true));
     }
   }
 }
@@ -128,7 +133,8 @@ function partialTest($serials, $st) {
     echo 'testing is partially valid '.$format.PHP_EOL;
     foreach($ss as $s) {
       $s = substr($s, 0, -2);
-      result('is partially valid ', $s, ($st->isValid($s, false) == true));
+      $check = $st->check($s);
+      result('is partially valid ', $s, ($check['partiallyValid'] == true));
     }
   }
 }
@@ -138,7 +144,8 @@ function partialFullTest($serials, $st) {
     echo 'testing is partially valid full '.$format.PHP_EOL;
     foreach($ss as $s) {
       $s = substr($s, 0, -2);
-      result('is partially valid full ', $s, ($st->isValid($s, true) == false));
+      $check = $st->check($s);
+      result('is partially valid full ', $s, ($check['fullyValid'] == false));
     }
   }
 }
@@ -148,7 +155,8 @@ function tooLongTest($serials, $st) {
     echo 'testing too long '.$format.PHP_EOL;
     foreach($ss as $s) {
       $s = $s . '01';
-      result('is too long ', $s, ($st->isValid($s) == false));
+      $check = $st->check($s);
+      result('is too long ', $s, (($check['fullyValid'] + $check['partiallyValid']) == false));
     }
   }
 }
@@ -156,14 +164,16 @@ function tooLongTest($serials, $st) {
 function invalidTest($serials, $st) {
   echo 'testing invalid '.PHP_EOL;
   foreach($serials as $s){
-    result('invalid ', $s, ($st->isValid($s) == false));
+    $check = $st->check($s);
+    result('invalid ', $s, (($check['fullyValid'] + $check['partiallyValid']) == false));
   }
 }
 
 function dateTest($serials, $st) {
   echo 'testing dates '.PHP_EOL;
   foreach($serials as $s => $value) {
-    result('dates ', $s, arrayEqual($st->getDateData($s, false, $value['type']), $value['dateData']));
+    $check = $st->check($s, $value['type']);
+    result('dates ', $s, arrayEqual($check['dateData'], $value['dateData'], $st));
   }
 }
 
