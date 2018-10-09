@@ -57,7 +57,7 @@ export class SerialTools1200 {
         start_year: 2016,
         end_year: 0,
       },
-      gl: {
+      gr: {
         start_year: 2017,
         end_year: 0,
       },
