@@ -67,7 +67,7 @@ class SerialTools1200
                 'start_year' => 2016,
                 'end_year'   => 0,
             ],
-            'gl'   => [
+            'gr'   => [
                 'start_year' => 2017,
                 'end_year'   => 0,
             ],
@@ -140,7 +140,7 @@ class SerialTools1200
             ],
             'XX0X00X000'  => [
                 'regex'     => [
-                    '[CG|AG|MJ|MU|DA]{2}',
+                    '[CG|AB|AG|MJ|MU|DA]{2}',
                     '[0-9]',
                     '[(1-9)|(JKLS)]',
                     '[0-3]',

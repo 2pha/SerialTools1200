@@ -73,7 +73,7 @@ function () {
         start_year: 2016,
         end_year: 0
       },
-      gl: {
+      gr: {
         start_year: 2017,
         end_year: 0
       }
@@ -116,7 +116,7 @@ function () {
         maxlength: 10
       },
       XX0X00X000: {
-        regex: ['[CG|AG|MJ|MU|DA]{2}', '[0-9]', '[(1-9)|(JKLS)]', '[0-3]', // maybe these should be (0[1-9]|[12]\d|3[01])
+        regex: ['[CG|AB|AG|MJ|MU|DA]{2}', '[0-9]', '[(1-9)|(JKLS)]', '[0-3]', // maybe these should be (0[1-9]|[12]\d|3[01])
         '[0-9]', //
         '[A-Z]', '[0-9]', '[0-9]', '[0-9]'],
         maxlength: 10

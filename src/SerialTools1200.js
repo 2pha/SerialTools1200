@@ -135,7 +135,7 @@ export class SerialTools1200 {
       },
       XX0X00X000: {
         regex: [
-          '[CG|AG|MJ|MU|DA]{2}',
+          '[CG|AB|AG|MJ|MU|DA]{2}',
           '[0-9]',
           '[(1-9)|(JKLS)]',
           '[0-3]', // maybe these should be (0[1-9]|[12]\d|3[01])
