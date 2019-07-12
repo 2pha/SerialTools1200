@@ -135,6 +135,8 @@ function () {
       var results = {
         partiallyValid: false,
         fullyValid: false,
+        inValid: true,
+        serial: string,
         format: '',
         dateData: {
           day: 0,
@@ -187,11 +189,16 @@ function () {
             results['fullyValid'] = true;
             results['format'] = format;
           }
+        } // Set invlid to false.
+
+
+        if (results['fullyValid'] || results['partiallyValid']) {
+          results['inValid'] = false;
         } // Add the date data if fully valid.
 
 
         if (results['fullyValid']) {
-          if (results['format'] == 'XX0X00X000') {
+          if (results['format'] === 'XX0X00X000') {
             // Day.
             var dayval = string.substr(4, 2);
             var daynum = parseInt(dayval);
@@ -217,7 +224,7 @@ function () {
               // js2php can't combine if statements well, so do 2.
               if (_i2 >= this.mks[mk]['start_year'] && _i2 <= this.mks[mk]['end_year']) {
                 results['dateData']['years'].push(_i2);
-              } else if (_i2 >= this.mks[mk]['start_year'] && this.mks[mk]['end_year'] == 0) {
+              } else if (_i2 >= this.mks[mk]['start_year'] && this.mks[mk]['end_year'] === 0) {
                 results['dateData']['years'].push(_i2);
               }
             } else {

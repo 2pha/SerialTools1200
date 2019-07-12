@@ -175,6 +175,8 @@ class SerialTools1200
         $results = [
             'partiallyValid' => false,
             'fullyValid'     => false,
+            'inValid'        => true,
+            'serial'         => $string,
             'format'         => '',
             'dateData'       => [
                 'day'   => 0,
@@ -212,8 +214,12 @@ class SerialTools1200
                 }
             }
 
+            if ($results['fullyValid'] || $results['partiallyValid']) {
+                $results['inValid'] = false;
+            }
+
             if ($results['fullyValid']) {
-                if ($results['format'] == 'XX0X00X000') {
+                if ($results['format'] === 'XX0X00X000') {
                     $dayval = substr($string, 4, 2);
                     $daynum = intval($dayval);
                     if ($daynum > 0 && $daynum <= 31) {
@@ -233,7 +239,7 @@ class SerialTools1200
                     if ($mk) {
                         if ($i >= $this->mks[$mk]['start_year'] && $i <= $this->mks[$mk]['end_year']) {
                             array_push($results['dateData']['years'], $i);
-                        } else if ($i >= $this->mks[$mk]['start_year'] && $this->mks[$mk]['end_year'] == 0) {
+                        } else if ($i >= $this->mks[$mk]['start_year'] && $this->mks[$mk]['end_year'] === 0) {
                             array_push($results['dateData']['years'], $i);
                         }
                     } else {
