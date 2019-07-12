@@ -2,6 +2,16 @@
   "extends": "airbnb-base",
   "rules": {
     "dot-notation": 0,
-    "import/prefer-default-export": ["off"]
+    "import/prefer-default-export": [
+      "off"
+    ],
+    "no-param-reassign": [
+      0,
+      {
+        "props": true
+      }
+    ],
+    "guard-for-in": 0,
+    "no-restricted-syntax": "off"
   }
 }

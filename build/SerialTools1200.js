@@ -150,10 +150,10 @@ function () {
       for (var format in this.formats) {
         // Check partial.
         if (!results['partiallyValid'] && string.length <= this.formats[format]['maxlength']) {
-          // Put it into an array, because php conversion does not work well with string cancatination.
+          // Put it into an array, because php conversion does not work well concatinating strings.
           var regex = ['^'];
 
-          for (var i = 0; i < regexAddCount; i++) {
+          for (var i = 0; i < regexAddCount; i += 1) {
             // Access format object like an array so converts to php.
             regex.push(this.formats[format]['regex'][i]);
           }

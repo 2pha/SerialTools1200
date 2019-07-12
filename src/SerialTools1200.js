@@ -177,6 +177,7 @@ export class SerialTools1200 {
       },
     };
 
+
     // Make sure it is uppercase.
     string = string.toUpperCase();
 
@@ -185,9 +186,9 @@ export class SerialTools1200 {
     for (const format in this.formats) {
       // Check partial.
       if (!results['partiallyValid'] && string.length <= this.formats[format]['maxlength']) {
-        // Put it into an array, because php conversion does not work well with string cancatination.
+        // Put it into an array, because php conversion does not work well concatinating strings.
         const regex = ['^'];
-        for (let i = 0; i < regexAddCount; i++) {
+        for (let i = 0; i < regexAddCount; i += 1) {
           // Access format object like an array so converts to php.
           regex.push(this.formats[format]['regex'][i]);
         }

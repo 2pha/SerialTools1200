@@ -1,55 +1,5 @@
-// require("babel-polyfill");
 const assert = require('assert');
-const SerialTools1200 = require('../build/SerialTools1200');
-
-// import { SerialTools1200 } from '../src/SerialTools1200';
-// import { assert } from 'assert';
-// const assert = require('assert');
-
-/*
-const GE0XX = [
-  'GE3IA001117',
-  'GE6DD01053',
-  'GE3IA001120',
-  'GE5GK95625',
-  'GE1JC001587',
-  'GE9JC001076',
-  'GE9JC001060',
-  'GE2LA001246',
-  'GE2LA001114',
-  'GE7JG01497',
-  'GE6EK21577'
-];
-
-const XX0XX = [
-  'MH2BF26656',
-  'NH2BL66897',
-  'NH0EF23168',
-  'NH2AE24884',
-  'NC2CF27088',
-  'LA7CA001029',
-  'NH1bH41849'
-];
-
-const XX0000X = [
-  'CG9830F159',
-  'MJ6515F183',
-  'AG8307F292',
-  'AG7928F375'
-];
-
-const XX0X00X = [
-  'MJ3K29D142',
-  'AG7L11F204'
-];
-
-const serials = [
-  GE0XX,
-  XX0XX,
-  XX0000X,
-  XX0X00X
-];
-*/
+const serialTools1200 = require('../build/SerialTools1200');
 
 const GE0XX00000R = ['GE0GF01082R', 'GE8AD01111R', 'GE7LC01168R', 'GE6HB01016R', 'GE6SD01051R'];
 
@@ -134,8 +84,8 @@ const dateTests = {
 };
 
 const serials = [GE0XX00000R, GE0XX000000, XX0XX00000, XX0X00X000, LA0XX000000];
-console.log(SerialTools1200);
-const st = new SerialTools1200.SerialTools1200();
+
+const st = new serialTools1200.SerialTools1200();
 
 function isFullyValid(serial) {
   const check = st.check(serial);

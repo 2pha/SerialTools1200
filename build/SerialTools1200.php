@@ -187,9 +187,8 @@ class SerialTools1200
         foreach ($this->formats as $format => $___) {
             if (!$results['partiallyValid'] && strlen($string) <= $this->formats[$format]['maxlength']) {
                     $regex = ['^'];
-                for ($i = 0;
-                    $i < $regexAddCount; $i++) {
-                        array_push($regex, $this->formats[$format]['regex'][$i]);
+                for ($i = 0; $i < $regexAddCount; $i += 1) {
+                    array_push($regex, $this->formats[$format]['regex'][$i]);
                 }array_push($regex, '$');
                 $regexString = join('', $regex);
                 if (preg_match('/'.$regexString.'/', $string)) {
@@ -197,8 +196,7 @@ class SerialTools1200
                 }
             }if (!$results['fullyValid']) {
                 $regex = ['^'];
-                for ($i = 0;
-                $i < count($this->formats[$format]['regex']); $i++) {
+                for ($i = 0; $i < count($this->formats[$format]['regex']); $i++) {
                     array_push($regex, $this->formats[$format]['regex'][$i]);
                 }array_push($regex, '$');
                 $regexString = join('', $regex);
@@ -219,8 +217,7 @@ class SerialTools1200
                 $startyear = 1979;
                 if ($yearval < 9) {
                     $startyear += ($yearval + 1);
-                }for ($i = $startyear;
-                $i < $this->currentYear; $i += 10) {
+                }for ($i = $startyear; $i < $this->currentYear; $i += 10) {
                     if ($mk) {
                         if ($i >= $this->mks[$mk]['start_year'] && $i <= $this->mks[$mk]['end_year']) {
                             array_push($results['dateData']['years'], $i);
