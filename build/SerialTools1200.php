@@ -172,7 +172,7 @@ class SerialTools1200
 
     public function check($string, $mk=false)
     {
-        $results       = [
+        $results = [
             'partiallyValid' => false,
             'fullyValid'     => false,
             'format'         => '',
@@ -182,6 +182,10 @@ class SerialTools1200
                 'years' => [],
             ],
         ];
+        if (!strlen($string)) {
+            return $results;
+        }
+
         $string        = strtoupper($string);
         $regexAddCount = (strlen($string) - 1);
         foreach ($this->formats as $format => $___) {
@@ -194,7 +198,9 @@ class SerialTools1200
                 if (preg_match('/'.$regexString.'/', $string)) {
                     $results['partiallyValid'] = true;
                 }
-            }if (!$results['fullyValid']) {
+            }
+
+            if (!$results['fullyValid']) {
                 $regex = ['^'];
                 for ($i = 0; $i < count($this->formats[$format]['regex']); $i++) {
                     array_push($regex, $this->formats[$format]['regex'][$i]);
@@ -204,20 +210,26 @@ class SerialTools1200
                     $results['fullyValid'] = true;
                     $results['format']     = $format;
                 }
-            }if ($results['fullyValid']) {
+            }
+
+            if ($results['fullyValid']) {
                 if ($results['format'] == 'XX0X00X000') {
                     $dayval = substr($string, 4, 2);
                     $daynum = intval($dayval);
                     if ($daynum > 0 && $daynum <= 31) {
                         $results['dateData']['day'] = intval($dayval);
                     }
-                }$results['dateData']['month'] = $this->monthMap[substr($string, 3, 1)];
+                }
+
+                $results['dateData']['month'] = $this->monthMap[substr($string, 3, 1)];
                 $yearval   = substr($string, 2, 1);
                 $yearval   = intval($yearval);
                 $startyear = 1979;
                 if ($yearval < 9) {
                     $startyear += ($yearval + 1);
-                }for ($i = $startyear; $i < $this->currentYear; $i += 10) {
+                }
+
+                for ($i = $startyear; $i < $this->currentYear; $i += 10) {
                     if ($mk) {
                         if ($i >= $this->mks[$mk]['start_year'] && $i <= $this->mks[$mk]['end_year']) {
                             array_push($results['dateData']['years'], $i);
@@ -227,7 +239,9 @@ class SerialTools1200
                     } else {
                         array_push($results['dateData']['years'], $i);
                     }
-                }return $results;
+                }
+
+                return $results;
             }//end if
         }//end foreach
 

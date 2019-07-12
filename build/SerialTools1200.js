@@ -141,7 +141,12 @@ function () {
           month: 0,
           years: []
         }
-      }; // Make sure it is uppercase.
+      }; // Return if no characters in string.
+
+      if (!string.length) {
+        return results;
+      } // Make sure it is uppercase.
+
 
       string = string.toUpperCase(); // Loop over the formats checking validity.
 

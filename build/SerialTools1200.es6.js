@@ -177,6 +177,10 @@ export class SerialTools1200 {
       },
     };
 
+    // Return if no characters in string.
+    if (!string.length) {
+      return results;
+    }
 
     // Make sure it is uppercase.
     string = string.toUpperCase();
