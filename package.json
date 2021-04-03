@@ -11,7 +11,7 @@
     "buildphp": "./node_modules/.bin/js2php src/SerialTools1200.js > ./build/SerialTools1200.php && node quickfixes.js",
     "formatphp": "phpcbf -q ./build/SerialTools1200.php --standard=MySource; exit 0",
     "buildes6": "cp ./src/SerialTools1200.js ./build/SerialTools1200.es6.js",
-    "buildall": "npm run build && npm run buildes6 && npm run buildphp && npm run formatphp"
+    "buildall": "npm run build && npm run buildes6 && npm run buildphp"
   },
   "author": "Chris 2pha Brown",
   "license": "Apache-2.0",
@@ -22,10 +22,10 @@
     "@babel/core": "^7.13.14",
     "@babel/preset-env": "^7.13.12",
     "babel-polyfill": "^6.26.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "js2php": "git+https://github.com/2pha/js2php.git",
-    "mocha": "^4.1.0"
+    "mocha": "^8.3.2"
   }
 }
