@@ -18,13 +18,13 @@
   "repository": "github:2pha/SerialTools1200",
   "dependencies": {},
   "devDependencies": {
-    "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
     "babel-polyfill": "^6.26.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-import": "^2.22.1",
     "js2php": "git+https://github.com/2pha/js2php.git",
     "mocha": "^4.1.0"
   }
