@@ -12,6 +12,7 @@
       }
     ],
     "guard-for-in": 0,
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "allowForLoopAfterthoughts": true
   }
 }

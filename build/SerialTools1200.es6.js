@@ -61,6 +61,10 @@ export class SerialTools1200 {
         start_year: 2017,
         end_year: 0,
       },
+      mk7: {
+        start_year: 2019,
+        end_year: 0,
+      },
     };
 
     this.monthMap = {
@@ -150,6 +154,21 @@ export class SerialTools1200 {
       LA0XX000000: {
         regex: [
           '[LA]{2}',
+          '[0-9]',
+          '[A-LS]',
+          '[A-Z]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+          '[0-9]',
+        ],
+        maxlength: 11,
+      },
+      GM0XX000000: {
+        regex: [
+          '[GM]{2}',
           '[0-9]',
           '[A-LS]',
           '[A-Z]',
