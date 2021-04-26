@@ -7,5 +7,10 @@
             "email": "chris@2pha.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Twopha\\SerialTools1200\\": "src/"
+        }
+    },
     "require": {}
 }
