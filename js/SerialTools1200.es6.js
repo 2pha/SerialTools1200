@@ -1,6 +1,6 @@
 export class SerialTools1200 {
   constructor() {
-    // js2php doesn't work with dates, add this so it can be set.
+    // js2php doesn't work with dates, this is overridden for PHP in quickfixes.
     this.currentYear = new Date().getFullYear();
     this.mks = {
       mk2: {

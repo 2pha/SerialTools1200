@@ -1,6 +1,6 @@
 <?php 
 
-namespace SerialTools1200;
+namespace Twopha\SerialTools1200;
 
 class SerialTools1200
 {

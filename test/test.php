@@ -1,6 +1,6 @@
 <?php
 
-namespace SerialTools1200;
+namespace Twopha\SerialTools1200;
 
 /*require("babel-polyfill");*/
 require(dirname(__FILE__).'/../src/SerialTools1200.php');
