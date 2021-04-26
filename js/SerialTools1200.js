@@ -11,7 +11,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-/* //@ts-check */
 var SerialTools1200 = /*#__PURE__*/function () {
   function SerialTools1200() {
     _classCallCheck(this, SerialTools1200);
@@ -77,6 +76,10 @@ var SerialTools1200 = /*#__PURE__*/function () {
       },
       mk7: {
         start_year: 2019,
+        end_year: 0
+      },
+      mk7r: {
+        start_year: 2000,
         end_year: 0
       }
     };

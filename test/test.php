@@ -1,6 +1,9 @@
 <?php
+
+namespace SerialTools1200;
+
 /*require("babel-polyfill");*/
-require(dirname(__FILE__).'/../build/SerialTools1200.php');
+require(dirname(__FILE__).'/../src/SerialTools1200.php');
 
 $st = new SerialTools1200();
 

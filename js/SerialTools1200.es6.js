@@ -1,5 +1,3 @@
-/* //@ts-check */
-
 export class SerialTools1200 {
   constructor() {
     // js2php doesn't work with dates, add this so it can be set.
@@ -63,6 +61,10 @@ export class SerialTools1200 {
       },
       mk7: {
         start_year: 2019,
+        end_year: 0,
+      },
+      mk7r: {
+        start_year: 2000,
         end_year: 0,
       },
     };

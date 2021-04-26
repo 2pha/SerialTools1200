@@ -1,7 +1,7 @@
 /* eslint-disable */
 var fs = require('fs');
 var os = require('os');
-fs.readFile('./build/SerialTools1200.php', 'utf8', function (err, data) {
+fs.readFile('./src/SerialTools1200.php', 'utf8', function (err, data) {
   if (err) {
     return console.log(err);
   }
@@ -19,8 +19,11 @@ fs.readFile('./build/SerialTools1200.php', 'utf8', function (err, data) {
   // Fix newline after closing brace (return after).
   result = result.replace(/}return/g, '}' + os.EOL + 'return');
 
+  // Add namespace.
+  result = result.replace(/<\?php/g, '<?php ' + os.EOL + os.EOL + 'namespace SerialTools1200;' + os.EOL);
 
-  fs.writeFile('./build/SerialTools1200.php', result, 'utf8', function (err) {
+
+  fs.writeFile('./src/SerialTools1200.php', result, 'utf8', function (err) {
     if (err) return console.log(err);
   });
 });
