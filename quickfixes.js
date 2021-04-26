@@ -20,8 +20,10 @@ fs.readFile('./src/SerialTools1200.php', 'utf8', function (err, data) {
   result = result.replace(/}return/g, '}' + os.EOL + 'return');
 
   // Add namespace.
-  result = result.replace(/<\?php/g, '<?php ' + os.EOL + os.EOL + 'namespace SerialTools1200;' + os.EOL);
+  result = result.replace('<?php', '<?php ' + os.EOL + os.EOL + 'namespace SerialTools1200;' + os.EOL);
 
+  // PHP current year.
+  result = result.replace('new Date()->getFullYear();', 'intval(date("Y"));');
 
   fs.writeFile('./src/SerialTools1200.php', result, 'utf8', function (err) {
     if (err) return console.log(err);

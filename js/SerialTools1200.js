@@ -16,7 +16,7 @@ var SerialTools1200 = /*#__PURE__*/function () {
     _classCallCheck(this, SerialTools1200);
 
     // js2php doesn't work with dates, add this so it can be set.
-    this.currentYear = 2018;
+    this.currentYear = new Date().getFullYear();
     this.mks = {
       mk2: {
         start_year: 1979,
