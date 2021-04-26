@@ -1,0 +1,11 @@
+{
+    "name": "twopha/serial-tools-1200",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Chris Brown",
+            "email": "chris@2pha.com"
+        }
+    ],
+    "require": {}
+}
