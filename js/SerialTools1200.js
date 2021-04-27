@@ -110,29 +110,35 @@ var SerialTools1200 = /*#__PURE__*/function () {
     this.formats = {
       GE0XX00000R: {
         regex: ['[GE]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[R]'],
-        maxlength: 11
+        maxlength: 11,
+        models: ['mk2', 'mk4', 'mk5', 'm5g', 'mk5g']
       },
       GE0XX000000: {
         regex: ['[GE]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'],
-        maxlength: 11
+        maxlength: 11,
+        models: ['mk2', 'm3d', 'mk3d', 'mk4', 'mk5', 'm5g', 'mk5g', 'gld', 'mk6']
       },
       XX0XX00000: {
         regex: ['[GE|NH]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'],
-        maxlength: 10
+        maxlength: 10,
+        modesl: ['mk2', 'mk3', 'm3d', 'mk3d', 'ltd', 'mk4']
       },
       XX0X00X000: {
         regex: ['[CG|AB|AG|MJ|MU|DA]{2}', '[0-9]', '[(1-9)|(JKLS)]', '[0-3]', // maybe these should be (0[1-9]|[12]\d|3[01])
         '[0-9]', //
         '[A-Z]', '[0-9]', '[0-9]', '[0-9]'],
-        maxlength: 10
+        maxlength: 10,
+        models: ['mk2']
       },
       LA0XX000000: {
         regex: ['[LA]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'],
-        maxlength: 11
+        maxlength: 11,
+        models: ['g', 'gae', 'gr']
       },
       GM0XX000000: {
         regex: ['[GM]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'],
-        maxlength: 11
+        maxlength: 11,
+        models: ['mk7', 'mk7r']
       }
     };
   }

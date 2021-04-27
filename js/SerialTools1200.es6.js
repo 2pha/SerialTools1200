@@ -109,6 +109,13 @@ export class SerialTools1200 {
           '[R]',
         ],
         maxlength: 11,
+        models: [
+          'mk2',
+          'mk4',
+          'mk5',
+          'm5g',
+          'mk5g',
+        ],
       },
       GE0XX000000: {
         regex: [
@@ -124,6 +131,17 @@ export class SerialTools1200 {
           '[0-9]',
         ],
         maxlength: 11,
+        models: [
+          'mk2',
+          'm3d',
+          'mk3d',
+          'mk4',
+          'mk5',
+          'm5g',
+          'mk5g',
+          'gld',
+          'mk6',
+        ],
       },
       XX0XX00000: {
         regex: [
@@ -138,6 +156,14 @@ export class SerialTools1200 {
           '[0-9]',
         ],
         maxlength: 10,
+        modesl: [
+          'mk2',
+          'mk3',
+          'm3d',
+          'mk3d',
+          'ltd',
+          'mk4',
+        ],
       },
       XX0X00X000: {
         regex: [
@@ -152,6 +178,9 @@ export class SerialTools1200 {
           '[0-9]',
         ],
         maxlength: 10,
+        models: [
+          'mk2',
+        ],
       },
       LA0XX000000: {
         regex: [
@@ -167,6 +196,11 @@ export class SerialTools1200 {
           '[0-9]',
         ],
         maxlength: 11,
+        models: [
+          'g',
+          'gae',
+          'gr',
+        ],
       },
       GM0XX000000: {
         regex: [
@@ -182,6 +216,10 @@ export class SerialTools1200 {
           '[0-9]',
         ],
         maxlength: 11,
+        models: [
+          'mk7',
+          'mk7r',
+        ],
       },
     };
   }
