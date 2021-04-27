@@ -121,7 +121,7 @@ var SerialTools1200 = /*#__PURE__*/function () {
       XX0XX00000: {
         regex: ['[GE|NH]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'],
         maxlength: 10,
-        modesl: ['mk2', 'mk3', 'm3d', 'mk3d', 'ltd', 'mk4']
+        models: ['mk2', 'mk3', 'm3d', 'mk3d', 'ltd', 'mk4']
       },
       XX0X00X000: {
         regex: ['[CG|AB|AG|MJ|MU|DA]{2}', '[0-9]', '[(1-9)|(JKLS)]', '[0-3]', // maybe these should be (0[1-9]|[12]\d|3[01])
@@ -153,6 +153,7 @@ var SerialTools1200 = /*#__PURE__*/function () {
         inValid: true,
         serial: string,
         format: '',
+        validModels: [],
         dateData: {
           day: 0,
           month: 0,
@@ -202,7 +203,9 @@ var SerialTools1200 = /*#__PURE__*/function () {
 
           if (string.match(_regexString)) {
             results['fullyValid'] = true;
-            results['format'] = format;
+            results['format'] = format; // Set the validModels from the format models.
+
+            results['validModels'] = this.formats[format]['models'];
           }
         } // Set invlid to false.
 

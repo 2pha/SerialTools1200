@@ -156,7 +156,7 @@ export class SerialTools1200 {
           '[0-9]',
         ],
         maxlength: 10,
-        modesl: [
+        models: [
           'mk2',
           'mk3',
           'm3d',
@@ -231,6 +231,7 @@ export class SerialTools1200 {
       inValid: true,
       serial: string,
       format: '',
+      validModels: [],
       dateData: {
         day: 0,
         month: 0,
@@ -275,6 +276,9 @@ export class SerialTools1200 {
         if (string.match(regexString)) {
           results['fullyValid'] = true;
           results['format'] = format;
+
+          // Set the validModels from the format models.
+          results['validModels'] = this.formats[format]['models'];
         }
       }
 
