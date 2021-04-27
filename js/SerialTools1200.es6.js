@@ -2,7 +2,7 @@ export class SerialTools1200 {
   constructor() {
     // js2php doesn't work with dates, this is overridden for PHP in quickfixes.
     this.currentYear = new Date().getFullYear();
-    this.mks = {
+    this.models = {
       mk2: {
         start_year: 1979,
         end_year: 2010,
@@ -308,9 +308,9 @@ export class SerialTools1200 {
         for (let i = startyear; i < this.currentYear; i += 10) {
           if (mk) {
             // js2php can't combine if statements well, so do 2.
-            if (i >= this.mks[mk]['start_year'] && i <= this.mks[mk]['end_year']) {
+            if (i >= this.models[mk]['start_year'] && i <= this.models[mk]['end_year']) {
               results['dateData']['years'].push(i);
-            } else if (i >= this.mks[mk]['start_year'] && this.mks[mk]['end_year'] === 0) {
+            } else if (i >= this.models[mk]['start_year'] && this.models[mk]['end_year'] === 0) {
               results['dateData']['years'].push(i);
             }
           } else {

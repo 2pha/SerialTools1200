@@ -17,7 +17,7 @@ var SerialTools1200 = /*#__PURE__*/function () {
 
     // js2php doesn't work with dates, this is overridden for PHP in quickfixes.
     this.currentYear = new Date().getFullYear();
-    this.mks = {
+    this.models = {
       mk2: {
         start_year: 1979,
         end_year: 2010
@@ -237,9 +237,9 @@ var SerialTools1200 = /*#__PURE__*/function () {
           for (var _i2 = startyear; _i2 < this.currentYear; _i2 += 10) {
             if (mk) {
               // js2php can't combine if statements well, so do 2.
-              if (_i2 >= this.mks[mk]['start_year'] && _i2 <= this.mks[mk]['end_year']) {
+              if (_i2 >= this.models[mk]['start_year'] && _i2 <= this.models[mk]['end_year']) {
                 results['dateData']['years'].push(_i2);
-              } else if (_i2 >= this.mks[mk]['start_year'] && this.mks[mk]['end_year'] === 0) {
+              } else if (_i2 >= this.models[mk]['start_year'] && this.models[mk]['end_year'] === 0) {
                 results['dateData']['years'].push(_i2);
               }
             } else {
