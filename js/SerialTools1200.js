@@ -124,7 +124,7 @@ var SerialTools1200 = /*#__PURE__*/function () {
         models: ['mk2', 'mk3', 'm3d', 'mk3d', 'ltd', 'mk4']
       },
       XX0X00X000: {
-        regex: ['[CG|AB|AG|MJ|MU|MF|DA]{2}', '[0-9]', '[(1-9)|(JKLS)]', '[0-3]', // maybe these should be (0[1-9]|[12]\d|3[01])
+        regex: ['[CG|AB|AG|MJ|MU|MF|DA|DK]{2}', '[0-9]', '[(1-9)|(JKLS)]', '[0-3]', // maybe these should be (0[1-9]|[12]\d|3[01])
         '[0-9]', //
         '[A-Z]', '[0-9]', '[0-9]', '[0-9]'],
         maxlength: 10,
