@@ -49,23 +49,23 @@ export class SerialTools1200 {
       },
       gae: {
         start_year: 2016,
-        end_year: 0,
+        end_year: this.currentYear,
       },
       g: {
         start_year: 2016,
-        end_year: 0,
+        end_year: this.currentYear,
       },
       gr: {
         start_year: 2017,
-        end_year: 0,
+        end_year: this.currentYear,
       },
       mk7: {
         start_year: 2019,
-        end_year: 0,
+        end_year: this.currentYear,
       },
       mk7r: {
-        start_year: 2000,
-        end_year: 0,
+        start_year: 2020,
+        end_year: this.currentYear,
       },
     };
 
@@ -224,7 +224,7 @@ export class SerialTools1200 {
     };
   }
 
-  check(string, mk = false) {
+  check(string) {
     const results = {
       partiallyValid: false,
       fullyValid: false,
@@ -282,7 +282,7 @@ export class SerialTools1200 {
         }
       }
 
-      // Set invlid to false.
+      // Set invalid to false.
       if (results['fullyValid'] || results['partiallyValid']) {
         results['inValid'] = false;
       }
@@ -306,18 +306,30 @@ export class SerialTools1200 {
         yearval = parseInt(yearval);
 
         let startyear = 1979;
+        let modelStartYear = 0;
+        let endyear = this.currentYear;
+        let modelEndYear = 0;
+
+        // Set model start and end years.
+        for (let i = 0; i < results['validModels'].length; i++) {
+          let modStart = this.models[results['validModels'][i]]['start_year'];
+          let modEnd = this.models[results['validModels'][i]]['end_year'];
+
+          if (modelStartYear === 0 || modStart < modelStartYear) {
+            modelStartYear = modStart;
+          }
+          if (modelEndYear === 0 || modEnd > endyear) {
+            modelEndYear = modEnd;
+          }
+        }
+
+        // Set the start year from value in serial.
         if (yearval < 9) {
           startyear += yearval + 1;
         }
-        for (let i = startyear; i < this.currentYear; i += 10) {
-          if (mk) {
-            // js2php can't combine if statements well, so do 2.
-            if (i >= this.models[mk]['start_year'] && i <= this.models[mk]['end_year']) {
-              results['dateData']['years'].push(i);
-            } else if (i >= this.models[mk]['start_year'] && this.models[mk]['end_year'] === 0) {
-              results['dateData']['years'].push(i);
-            }
-          } else {
+        // Add years, checking if within model boudary.
+        for (let i = startyear; i <= endyear; i += 10) {
+          if (i >= modelStartYear && i <= modelEndYear) {
             results['dateData']['years'].push(i);
           }
         }

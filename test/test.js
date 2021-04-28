@@ -118,8 +118,8 @@ function getFormat(serial) {
   return check.format;
 }
 
-function getDateData(serial, mk = false) {
-  const check = st.check(serial, mk);
+function getDateData(serial) {
+  const check = st.check(serial);
   return check.dateData;
 }
 
@@ -222,7 +222,7 @@ describe('is not valid', () => {
 describe('date test', () => {
   for (serial in dateTests) {
     it(`${serial} date test`, () => {
-      assert.deepEqual(getDateData(serial, dateTests[serial].type), dateTests[serial].dateData);
+      assert.deepEqual(getDateData(serial), dateTests[serial].dateData);
     });
   }
 });

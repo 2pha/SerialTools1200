@@ -188,7 +188,7 @@ function invalidTest($serials, $st) {
 function dateTest($serials, $st) {
   echo 'testing dates '.PHP_EOL;
   foreach($serials as $s => $value) {
-    $check = $st->check($s, $value['type']);
+    $check = $st->check($s);
     result('dates ', $s, arrayEqual($check['dateData'], $value['dateData'], $st));
   }
 }

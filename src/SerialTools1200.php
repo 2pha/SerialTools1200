@@ -11,11 +11,11 @@ class SerialTools1200
     public function __construct()
     {
         $this->currentYear = intval(date("Y"));
-        $this->models = array("mk2" => array("start_year" => 1979, "end_year" => 2010), "mk3" => array("start_year" => 1989, "end_year" => 1998), "mk4" => array("start_year" => 1996, "end_year" => 2005), "mk3d" => array("start_year" => 1997, "end_year" => 2002), "m3d" => array("start_year" => 1997, "end_year" => 2002), "ltd" => array("start_year" => 1995, "end_year" => 2002), "mk5" => array("start_year" => 2002, "end_year" => 2010), "mk5g" => array("start_year" => 2002, "end_year" => 2010), "m5g" => array("start_year" => 2002, "end_year" => 2010), "gld" => array("start_year" => 2004, "end_year" => 2004), "mk6" => array("start_year" => 2007, "end_year" => 2010), "gae" => array("start_year" => 2016, "end_year" => 0), "g" => array("start_year" => 2016, "end_year" => 0), "gr" => array("start_year" => 2017, "end_year" => 0), "mk7" => array("start_year" => 2019, "end_year" => 0), "mk7r" => array("start_year" => 2000, "end_year" => 0));
+        $this->models = array("mk2" => array("start_year" => 1979, "end_year" => 2010), "mk3" => array("start_year" => 1989, "end_year" => 1998), "mk4" => array("start_year" => 1996, "end_year" => 2005), "mk3d" => array("start_year" => 1997, "end_year" => 2002), "m3d" => array("start_year" => 1997, "end_year" => 2002), "ltd" => array("start_year" => 1995, "end_year" => 2002), "mk5" => array("start_year" => 2002, "end_year" => 2010), "mk5g" => array("start_year" => 2002, "end_year" => 2010), "m5g" => array("start_year" => 2002, "end_year" => 2010), "gld" => array("start_year" => 2004, "end_year" => 2004), "mk6" => array("start_year" => 2007, "end_year" => 2010), "gae" => array("start_year" => 2016, "end_year" => $this->currentYear), "g" => array("start_year" => 2016, "end_year" => $this->currentYear), "gr" => array("start_year" => 2017, "end_year" => $this->currentYear), "mk7" => array("start_year" => 2019, "end_year" => $this->currentYear), "mk7r" => array("start_year" => 2020, "end_year" => $this->currentYear));
         $this->monthMap = array("1" => 1, "A" => 1, "2" => 2, "B" => 2, "3" => 3, "C" => 3, "4" => 4, "D" => 4, "5" => 5, "E" => 5, "6" => 6, "F" => 6, "7" => 7, "G" => 7, "8" => 8, "H" => 8, "S" => 8, "9" => 9, "I" => 9, "J" => 10, "K" => 11, "L" => 12);
         $this->formats = array("GE0XX00000R" => array("regex" => array('[GE]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[R]'), "maxlength" => 11, "models" => array('mk2', 'mk4', 'mk5', 'm5g', 'mk5g')), "GE0XX000000" => array("regex" => array('[GE]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'), "maxlength" => 11, "models" => array('mk2', 'm3d', 'mk3d', 'mk4', 'mk5', 'm5g', 'mk5g', 'gld', 'mk6')), "XX0XX00000" => array("regex" => array('[GE|NH]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'), "maxlength" => 10, "models" => array('mk2', 'mk3', 'm3d', 'mk3d', 'ltd', 'mk4')), "XX0X00X000" => array("regex" => array('[CG|AB|AG|MJ|MU|DA]{2}', '[0-9]', '[(1-9)|(JKLS)]', '[0-3]', '[0-9]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]'), "maxlength" => 10, "models" => array('mk2')), "LA0XX000000" => array("regex" => array('[LA]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'), "maxlength" => 11, "models" => array('g', 'gae', 'gr')), "GM0XX000000" => array("regex" => array('[GM]{2}', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'), "maxlength" => 11, "models" => array('mk7', 'mk7r')));
     }
-    public function check($string, $mk = false)
+    public function check($string)
     {
         $results = array("partiallyValid" => false, "fullyValid" => false, "inValid" => true, "serial" => $string, "format" => '', "validModels" => array(), "dateData" => array("day" => 0, "month" => 0, "years" => array()));
         if (!strlen($string)) {
@@ -60,17 +60,25 @@ class SerialTools1200
             $yearval = substr($string, 2, 1);
             $yearval = intval($yearval);
             $startyear = 1979;
+            $modelStartYear = 0;
+            $endyear = $this->currentYear;
+            $modelEndYear = 0;
+            for ($i = 0;
+            $i < count($results['validModels']);$i++) {$modStart = $this->models[$results['validModels'][$i]]['start_year'];
+                $modEnd = $this->models[$results['validModels'][$i]]['end_year'];
+                if ($modelStartYear === 0 || $modStart < $modelStartYear) {
+                    $modelStartYear = $modStart;
+                }
+                if ($modelEndYear === 0 || $modEnd > $endyear) {
+                    $modelEndYear = $modEnd;
+                }
+            }
             if ($yearval < 9) {
                 $startyear += $yearval + 1;
             }
             for ($i = $startyear;
-            $i < $this->currentYear;$i += 10) {if ($mk) {
-                    if ($i >= $this->models[$mk]['start_year'] && $i <= $this->models[$mk]['end_year']) {
-                        array_push($results['dateData']['years'], $i);
-                    } else if ($i >= $this->models[$mk]['start_year'] && $this->models[$mk]['end_year'] === 0) {
-                        array_push($results['dateData']['years'], $i);
-                    }
-            } else {array_push($results['dateData']['years'], $i);
+            $i <= $endyear;$i += 10) {if ($i >= $modelStartYear && $i <= $modelEndYear) {
+                    array_push($results['dateData']['years'], $i);
             }
             }
             return $results;

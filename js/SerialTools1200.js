@@ -64,23 +64,23 @@ var SerialTools1200 = /*#__PURE__*/function () {
       },
       gae: {
         start_year: 2016,
-        end_year: 0
+        end_year: this.currentYear
       },
       g: {
         start_year: 2016,
-        end_year: 0
+        end_year: this.currentYear
       },
       gr: {
         start_year: 2017,
-        end_year: 0
+        end_year: this.currentYear
       },
       mk7: {
         start_year: 2019,
-        end_year: 0
+        end_year: this.currentYear
       },
       mk7r: {
-        start_year: 2000,
-        end_year: 0
+        start_year: 2020,
+        end_year: this.currentYear
       }
     };
     this.monthMap = {
@@ -146,7 +146,6 @@ var SerialTools1200 = /*#__PURE__*/function () {
   _createClass(SerialTools1200, [{
     key: "check",
     value: function check(string) {
-      var mk = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var results = {
         partiallyValid: false,
         fullyValid: false,
@@ -207,7 +206,7 @@ var SerialTools1200 = /*#__PURE__*/function () {
 
             results['validModels'] = this.formats[format]['models'];
           }
-        } // Set invlid to false.
+        } // Set invalid to false.
 
 
         if (results['fullyValid'] || results['partiallyValid']) {
@@ -232,21 +231,32 @@ var SerialTools1200 = /*#__PURE__*/function () {
           var yearval = string.substr(2, 1);
           yearval = parseInt(yearval);
           var startyear = 1979;
+          var modelStartYear = 0;
+          var endyear = this.currentYear;
+          var modelEndYear = 0; // Set model start and end years.
+
+          for (var _i2 = 0; _i2 < results['validModels'].length; _i2++) {
+            var modStart = this.models[results['validModels'][_i2]]['start_year'];
+            var modEnd = this.models[results['validModels'][_i2]]['end_year'];
+
+            if (modelStartYear === 0 || modStart < modelStartYear) {
+              modelStartYear = modStart;
+            }
+
+            if (modelEndYear === 0 || modEnd > endyear) {
+              modelEndYear = modEnd;
+            }
+          } // Set the start year from value in serial.
+
 
           if (yearval < 9) {
             startyear += yearval + 1;
-          }
+          } // Add years, checking if within model boudary.
 
-          for (var _i2 = startyear; _i2 < this.currentYear; _i2 += 10) {
-            if (mk) {
-              // js2php can't combine if statements well, so do 2.
-              if (_i2 >= this.models[mk]['start_year'] && _i2 <= this.models[mk]['end_year']) {
-                results['dateData']['years'].push(_i2);
-              } else if (_i2 >= this.models[mk]['start_year'] && this.models[mk]['end_year'] === 0) {
-                results['dateData']['years'].push(_i2);
-              }
-            } else {
-              results['dateData']['years'].push(_i2);
+
+          for (var _i3 = startyear; _i3 <= endyear; _i3 += 10) {
+            if (_i3 >= modelStartYear && _i3 <= modelEndYear) {
+              results['dateData']['years'].push(_i3);
             }
           }
 
