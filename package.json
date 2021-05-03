@@ -8,15 +8,18 @@
     "testphp": "php ./test/test.php",
     "testall": "npm test && npm run testphp",
     "build": "npx babel SerialTools1200.js -d js",
+    "buildcjs": "npx babel --no-babelrc SerialTools1200.js --out-file js/SerialTools1200.cjs.js --presets=@babel/preset-env",
     "buildphp": "npx js2php SerialTools1200.js > ./src/SerialTools1200.php && node quickfixes.js && npm run formatphp",
     "formatphp": "phpcbf -q ./src/SerialTools1200.php; exit 0",
     "buildes6": "cp ./SerialTools1200.js ./js/SerialTools1200.es6.js",
-    "buildall": "npm run build && npm run buildes6 && npm run buildphp"
+    "buildall": "npm run build && npm run buildcjs && npm run buildes6 && npm run buildphp"
   },
   "author": "Chris 2pha Brown",
   "license": "Apache-2.0",
   "repository": "github:2pha/SerialTools1200",
-  "dependencies": {},
+  "dependencies": {
+    "babel-plugin-remove-import-export": "^1.1.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.14",

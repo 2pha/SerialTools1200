@@ -1,20 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.SerialTools1200 = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 var SerialTools1200 = /*#__PURE__*/function () {
   function SerialTools1200() {
-    _classCallCheck(this, SerialTools1200);
-
     // js2php doesn't work with dates, this is overridden for PHP in quickfixes.
     this.currentYear = new Date().getFullYear();
     this.models = {
@@ -143,132 +128,129 @@ var SerialTools1200 = /*#__PURE__*/function () {
     };
   }
 
-  _createClass(SerialTools1200, [{
-    key: "check",
-    value: function check(string) {
-      var results = {
-        partiallyValid: false,
-        fullyValid: false,
-        inValid: true,
-        serial: string,
-        format: '',
-        validModels: [],
-        dateData: {
-          day: 0,
-          month: 0,
-          years: []
-        }
-      }; // Return if no characters in string.
+  var _proto = SerialTools1200.prototype;
 
-      if (!string.length) {
-        return results;
-      } // Make sure it is uppercase.
-
-
-      string = string.toUpperCase(); // Loop over the formats checking validity.
-
-      var regexAddCount = string.length - 1;
-
-      for (var format in this.formats) {
-        // Check partial.
-        if (!results['partiallyValid'] && string.length <= this.formats[format]['maxlength']) {
-          // Put it into an array, because php conversion does not work well concatinating strings.
-          var regex = ['^'];
-
-          for (var i = 0; i < regexAddCount; i += 1) {
-            // Access format object like an array so converts to php.
-            regex.push(this.formats[format]['regex'][i]);
-          }
-
-          regex.push('$');
-          var regexString = regex.join('');
-
-          if (string.match(regexString)) {
-            results['partiallyValid'] = true;
-          }
-        } // Check full
-
-
-        if (!results['fullyValid']) {
-          var _regex = ['^'];
-
-          for (var _i = 0; _i < this.formats[format]['regex'].length; _i++) {
-            _regex.push(this.formats[format]['regex'][_i]);
-          }
-
-          _regex.push('$');
-
-          var _regexString = _regex.join('');
-
-          if (string.match(_regexString)) {
-            results['fullyValid'] = true;
-            results['format'] = format; // Set the validModels from the format models.
-
-            results['validModels'] = this.formats[format]['models'];
-          }
-        } // Set invalid to false.
-
-
-        if (results['fullyValid'] || results['partiallyValid']) {
-          results['inValid'] = false;
-        } // Add the date data if fully valid.
-
-
-        if (results['fullyValid']) {
-          if (results['format'] === 'XX0X00X000') {
-            // Day.
-            var dayval = string.substr(4, 2);
-            var daynum = parseInt(dayval);
-
-            if (daynum > 0 && daynum <= 31) {
-              results['dateData']['day'] = parseInt(dayval);
-            }
-          } // Month.
-
-
-          results['dateData']['month'] = this.monthMap[string.substr(3, 1)]; // Years.
-
-          var yearval = string.substr(2, 1);
-          yearval = parseInt(yearval);
-          var startyear = 1979;
-          var modelStartYear = 0;
-          var endyear = this.currentYear;
-          var modelEndYear = 0; // Set model start and end years.
-
-          for (var _i2 = 0; _i2 < results['validModels'].length; _i2++) {
-            var modStart = this.models[results['validModels'][_i2]]['start_year'];
-            var modEnd = this.models[results['validModels'][_i2]]['end_year'];
-
-            if (modelStartYear === 0 || modStart < modelStartYear) {
-              modelStartYear = modStart;
-            }
-
-            if (modelEndYear === 0 || modEnd > endyear) {
-              modelEndYear = modEnd;
-            }
-          } // Set the start year from value in serial.
-
-
-          if (yearval < 9) {
-            startyear += yearval + 1;
-          } // Add years, checking if within model boudary.
-
-
-          for (var _i3 = startyear; _i3 <= endyear; _i3 += 10) {
-            if (_i3 >= modelStartYear && _i3 <= modelEndYear) {
-              results['dateData']['years'].push(_i3);
-            }
-          }
-
-          return results;
-        }
+  _proto.check = function check(string) {
+    var results = {
+      partiallyValid: false,
+      fullyValid: false,
+      inValid: true,
+      serial: string,
+      format: '',
+      validModels: [],
+      dateData: {
+        day: 0,
+        month: 0,
+        years: []
       }
+    }; // Return if no characters in string.
 
+    if (!string.length) {
       return results;
+    } // Make sure it is uppercase.
+
+
+    string = string.toUpperCase(); // Loop over the formats checking validity.
+
+    var regexAddCount = string.length - 1;
+
+    for (var format in this.formats) {
+      // Check partial.
+      if (!results['partiallyValid'] && string.length <= this.formats[format]['maxlength']) {
+        // Put it into an array, because php conversion does not work well concatinating strings.
+        var regex = ['^'];
+
+        for (var i = 0; i < regexAddCount; i += 1) {
+          // Access format object like an array so converts to php.
+          regex.push(this.formats[format]['regex'][i]);
+        }
+
+        regex.push('$');
+        var regexString = regex.join('');
+
+        if (string.match(regexString)) {
+          results['partiallyValid'] = true;
+        }
+      } // Check full
+
+
+      if (!results['fullyValid']) {
+        var _regex = ['^'];
+
+        for (var _i = 0; _i < this.formats[format]['regex'].length; _i++) {
+          _regex.push(this.formats[format]['regex'][_i]);
+        }
+
+        _regex.push('$');
+
+        var _regexString = _regex.join('');
+
+        if (string.match(_regexString)) {
+          results['fullyValid'] = true;
+          results['format'] = format; // Set the validModels from the format models.
+
+          results['validModels'] = this.formats[format]['models'];
+        }
+      } // Set invalid to false.
+
+
+      if (results['fullyValid'] || results['partiallyValid']) {
+        results['inValid'] = false;
+      } // Add the date data if fully valid.
+
+
+      if (results['fullyValid']) {
+        if (results['format'] === 'XX0X00X000') {
+          // Day.
+          var dayval = string.substr(4, 2);
+          var daynum = parseInt(dayval);
+
+          if (daynum > 0 && daynum <= 31) {
+            results['dateData']['day'] = parseInt(dayval);
+          }
+        } // Month.
+
+
+        results['dateData']['month'] = this.monthMap[string.substr(3, 1)]; // Years.
+
+        var yearval = string.substr(2, 1);
+        yearval = parseInt(yearval);
+        var startyear = 1979;
+        var modelStartYear = 0;
+        var endyear = this.currentYear;
+        var modelEndYear = 0; // Set model start and end years.
+
+        for (var _i2 = 0; _i2 < results['validModels'].length; _i2++) {
+          var modStart = this.models[results['validModels'][_i2]]['start_year'];
+          var modEnd = this.models[results['validModels'][_i2]]['end_year'];
+
+          if (modelStartYear === 0 || modStart < modelStartYear) {
+            modelStartYear = modStart;
+          }
+
+          if (modelEndYear === 0 || modEnd > endyear) {
+            modelEndYear = modEnd;
+          }
+        } // Set the start year from value in serial.
+
+
+        if (yearval < 9) {
+          startyear += yearval + 1;
+        } // Add years, checking if within model boudary.
+
+
+        for (var _i3 = startyear; _i3 <= endyear; _i3 += 10) {
+          if (_i3 >= modelStartYear && _i3 <= modelEndYear) {
+            results['dateData']['years'].push(_i3);
+          }
+        }
+
+        return results;
+      }
     }
-  }]);
+
+    return results;
+  };
 
   return SerialTools1200;
 }();
-
-exports.SerialTools1200 = SerialTools1200;

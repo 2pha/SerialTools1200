@@ -1,5 +1,5 @@
 const assert = require('assert');
-const serialTools1200 = require('../js/SerialTools1200');
+const serialTools1200 = require('../js/SerialTools1200.cjs');
 
 const GE0XX00000R = ['GE0GF01082R', 'GE8AD01111R', 'GE7LC01168R', 'GE6HB01016R', 'GE6SD01051R'];
 
