@@ -123,7 +123,7 @@ var SerialTools1200 = /*#__PURE__*/function () {
       GM0XX000000: {
         regex: ['GM', '[0-9]', '[A-LS]', '[A-Z]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]', '[0-9]'],
         maxlength: 11,
-        models: ['mk7', 'mk7r']
+        models: ['mk7', 'mk7r', 'gr']
       }
     };
   }

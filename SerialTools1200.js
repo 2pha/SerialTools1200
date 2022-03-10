@@ -219,6 +219,7 @@ export class SerialTools1200 {
         models: [
           'mk7',
           'mk7r',
+          'gr',
         ],
       },
     };
