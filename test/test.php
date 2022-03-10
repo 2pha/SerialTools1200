@@ -44,7 +44,8 @@ $XX0X00X000 = [
   'AG7928F375',
   'AB7701F094',
   'MF5521F032',
-  'DK1429D013'
+  'DK1429D013',
+  'MK5426E129'
 ];
 
 $LA0XX000000 = [
@@ -87,7 +88,8 @@ $inValid = [
   'MHTBF26656',
   'MH2ZF266i6',
   'MH2BFPPP',
-  'MH2BF2MS56'
+  'MH2BF2MS56',
+  'GE7KA108zz',
 ];
 
 $dateTests = [

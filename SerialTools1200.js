@@ -97,7 +97,7 @@ export class SerialTools1200 {
     this.formats = {
       GE0XX00000R: {
         regex: [
-          '[GE]{2}',
+          'GE',
           '[0-9]',
           '[A-LS]',
           '[A-Z]',
@@ -106,7 +106,7 @@ export class SerialTools1200 {
           '[0-9]',
           '[0-9]',
           '[0-9]',
-          '[R]',
+          'R',
         ],
         maxlength: 11,
         models: [
@@ -119,7 +119,7 @@ export class SerialTools1200 {
       },
       GE0XX000000: {
         regex: [
-          '[GE]{2}',
+          'GE',
           '[0-9]',
           '[A-LS]',
           '[A-Z]',
@@ -145,7 +145,7 @@ export class SerialTools1200 {
       },
       XX0XX00000: {
         regex: [
-          '[GE|NH]{2}',
+          '(GE|NH){1}',
           '[0-9]',
           '[A-LS]',
           '[A-Z]',
@@ -167,7 +167,7 @@ export class SerialTools1200 {
       },
       XX0X00X000: {
         regex: [
-          '[CG|AB|AG|MJ|MU|MF|DA|DK]{2}',
+          '(CG|AB|AG|MJ|MU|MF|MK|DA|DK){1}',
           '[0-9]',
           '[(1-9)|(JKLS)]',
           '[0-3]', // maybe these should be (0[1-9]|[12]\d|3[01])
@@ -184,7 +184,7 @@ export class SerialTools1200 {
       },
       LA0XX000000: {
         regex: [
-          '[LA]{2}',
+          'LA',
           '[0-9]',
           '[A-LS]',
           '[A-Z]',
@@ -204,7 +204,7 @@ export class SerialTools1200 {
       },
       GM0XX000000: {
         regex: [
-          '[GM]{2}',
+          'GM',
           '[0-9]',
           '[A-LS]',
           '[A-Z]',
